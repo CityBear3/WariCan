@@ -8,7 +8,7 @@ type Props = {
 const cardProps = {
   bg: "white",
   color: "black",
-  borderWidth: "2px",
+  borderWidth: "1px",
   borderRadius: "20px",
   borderColor: "gray.dark",
   overflow: "hidden",

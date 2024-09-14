@@ -21,8 +21,10 @@ export const App: React.FC<Props> = ({ children }) => {
 
   return (
     <>
-      <Header user={user} onProfileOpen={onOpen} />
-      {children}
+      <header style={{ zIndex: 1, position: "fixed", width: "100%" }}>
+        <Header user={user} onProfileOpen={onOpen} />
+      </header>
+      <main style={{ height: "100%" }}>{children}</main>
       <ProfileModal user={user} isOpen={isOpen} onClose={onClose} />
     </>
   );
