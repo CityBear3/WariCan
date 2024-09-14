@@ -1,5 +1,8 @@
 import type { Metadata } from "next";
 import { Providers } from "./providers";
+import { Header, HeaderSpacer } from "./header";
+import { VStack } from "@chakra-ui/react";
+import { App } from "./app";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -12,9 +15,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body>
-        <Providers>{children}</Providers>
+    <html lang="en" style={{ height: "100%" }}>
+      <body style={{ height: "100%" }}>
+        <Providers>
+          <App>{children}</App>
+        </Providers>
       </body>
     </html>
   );
