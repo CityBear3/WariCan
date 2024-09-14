@@ -7,6 +7,7 @@ type Props = {
 const cardProps = {
   bg: "primary.main",
   color: "primary.sub",
+  borderRadius: "20px",
 };
 
 export const PrimaryCard: React.FC<Props> = ({ children }) => (
