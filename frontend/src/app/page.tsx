@@ -1,4 +1,4 @@
-import { PrimaryButton } from "@/components/Button";
+import { PrimaryButton } from "@/components/button/PrimaryButton";
 
 export default function Home() {
   return <PrimaryButton />;
