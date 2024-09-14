@@ -5,6 +5,7 @@ import {
   Stack,
   StackDivider,
   Table,
+  Tbody,
   Td,
   Th,
   Tr,
@@ -49,18 +50,20 @@ export const WalletCard: React.FC<Props> = ({ wallet }) => (
       </CardHeader>
       <CardBody padding="0 10px">
         <Table>
-          <Tr>
-            <Th {...thProps}>現在残高</Th>
-            <Td {...tdProps}>
-              <MoneyText amount={wallet.balance} />
-            </Td>
-          </Tr>
-          <Tr>
-            <Th {...thProps}>未精算分</Th>
-            <Td {...tdProps}>
-              <MoneyText amount={wallet.debt} />
-            </Td>
-          </Tr>
+          <Tbody>
+            <Tr>
+              <Th {...thProps}>現在残高</Th>
+              <Td {...tdProps}>
+                <MoneyText amount={wallet.balance} />
+              </Td>
+            </Tr>
+            <Tr>
+              <Th {...thProps}>未精算分</Th>
+              <Td {...tdProps}>
+                <MoneyText amount={wallet.debt} />
+              </Td>
+            </Tr>
+          </Tbody>
         </Table>
       </CardBody>
     </Stack>
