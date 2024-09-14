@@ -28,3 +28,7 @@ gen-api-schema:
 gen-query:
 	sqlc compile
 	sqlc generate
+
+.PHONY: run
+run:
+	go run cmd/server/main.go
