@@ -1,13 +1,13 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { UserModel } from "@/domain/user";
-import { UserList } from "./UserList";
+import { UserImageList } from "./UserImageList";
 
-const meta: Meta<typeof UserList> = {
-  component: UserList,
+const meta: Meta<typeof UserImageList> = {
+  component: UserImageList,
 };
 
 export default meta;
-type Story = StoryObj<typeof UserList>;
+type Story = StoryObj<typeof UserImageList>;
 
 const users: UserModel[] = [
   {
@@ -25,6 +25,12 @@ const users: UserModel[] = [
 ];
 
 export const Normal: Story = {
+  args: {
+    users,
+  },
+};
+
+export const Sized: Story = {
   args: {
     users,
   },

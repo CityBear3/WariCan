@@ -6,7 +6,7 @@ import { SecondaryButton } from "@/components/button/SecondaryButton";
 import { GroupCard } from "@/components/group/GroupCard";
 import { FoldableSection } from "@/components/layout/FoldableSection";
 import { SplitBillingRow } from "@/components/splitBilling/SplitBillingRow";
-import { User } from "@/components/user/User";
+import { UserList } from "@/components/user/UserList";
 import { GroupModel } from "@/domain/group";
 import { UserModel } from "@/domain/user";
 import { Box, HStack, List, ListItem, VStack } from "@chakra-ui/react";
@@ -84,13 +84,7 @@ const Group: React.FC<Props> = ({ params: { id } }) => {
         </List>
       </FoldableSection>
       <FoldableSection title="メンバー" margin="20px">
-        <List>
-          {group.members.map((member) => (
-            <ListItem key={member.id} margin="20px 0px">
-              <User user={member} />
-            </ListItem>
-          ))}
-        </List>
+        <UserList users={group.members} />
       </FoldableSection>
       <VStack width="100%" alignItems="center" marginTop="10px">
         <SecondaryButton

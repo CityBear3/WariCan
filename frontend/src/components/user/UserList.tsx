@@ -1,16 +1,17 @@
 import { UserModel } from "@/domain/user";
-import { UserImage } from "./UserImage";
-import { HStack, Text } from "@chakra-ui/react";
+import { List, ListItem } from "@chakra-ui/react";
+import { User } from "./User";
 
 type Props = {
   users: UserModel[];
 };
 
 export const UserList: React.FC<Props> = ({ users }) => (
-  <HStack spacing="10px">
-    {users.map((user) => (
-      <UserImage user={user} key={user.id} size={30} />
+  <List>
+    {users.map((member) => (
+      <ListItem key={member.id} margin="20px 0px">
+        <User user={member} />
+      </ListItem>
     ))}
-    <Text>({users.length}人)</Text>
-  </HStack>
+  </List>
 );

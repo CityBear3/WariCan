@@ -1,5 +1,5 @@
 import { NormalCard } from "@/components/layout/NormalCard";
-import { UserList } from "@/components/user/UserList";
+import { UserImageList } from "@/components/user/UserImageList";
 import { GroupModel } from "@/domain/group";
 import { Box, HStack, Text } from "@chakra-ui/react";
 
@@ -18,7 +18,7 @@ export const GroupCard: React.FC<Props> = ({ group }) => (
       <Text>{group.description}</Text>
     </Box>
     <HStack width="100%" justifyContent="end" marginTop="10px">
-      <UserList users={group.members} />
+      <UserImageList users={group.members} />
     </HStack>
   </NormalCard>
 );
