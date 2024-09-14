@@ -4,6 +4,8 @@ export default extendTheme({
   colors: {
     transparent: "transparent",
     primary: {
+      main: "#4D9E64",
+      sub: "#FFFFFF",
       "50": "#FFFFFF",
       "100": "#FFFFFF",
       "200": "#FFFFFF",
