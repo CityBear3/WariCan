@@ -11,8 +11,8 @@ type Props = {
 export const User: React.FC<Props> = ({ user, withIcon }) => {
   return (
     <HStack>
-      <UserImage user={user} withIcon={withIcon} />
-      <UserName user={user} nameSize="24px" titleSize="24px" />
+      <UserImage user={user} withIcon={withIcon} size={40} />
+      <UserName user={user} nameSize="20px" titleSize="20px" />
     </HStack>
   );
 };

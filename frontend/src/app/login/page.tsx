@@ -5,6 +5,7 @@ import { VStack } from "@chakra-ui/react";
 
 const sectionProps = {
   width: "85%",
+  height: "100%",
 };
 
 const textFieldProps = {
