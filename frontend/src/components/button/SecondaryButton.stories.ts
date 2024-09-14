@@ -9,5 +9,7 @@ export default meta;
 type Story = StoryObj<typeof SecondaryButton>;
 
 export const Primary: Story = {
-  args: {},
+  args: {
+    label: "Sample Button",
+  },
 };

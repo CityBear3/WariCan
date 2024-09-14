@@ -1,5 +1,9 @@
 import { Box, Button } from "@chakra-ui/react";
 
-export const PrimaryButton: React.FC = () => (
-  <Button colorScheme="primary">Button</Button>
+type Props = {
+  label: string;
+};
+
+export const PrimaryButton: React.FC<Props> = ({ label }) => (
+  <Button colorScheme="primary">{label}</Button>
 );

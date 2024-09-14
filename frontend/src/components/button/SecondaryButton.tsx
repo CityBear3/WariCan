@@ -1,7 +1,10 @@
 import { Button } from "@chakra-ui/react";
 
-export const SecondaryButton: React.FC = () => (
+type Props = {
+  label: string;
+};
+export const SecondaryButton: React.FC<Props> = ({ label }) => (
   <Button colorScheme="primary" variant="outline">
-    Button
+    {label}
   </Button>
 );
