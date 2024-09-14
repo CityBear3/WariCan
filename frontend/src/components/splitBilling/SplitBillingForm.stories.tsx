@@ -8,15 +8,31 @@ const meta: Meta<typeof SplitBillingForm> = {
 export default meta;
 type Story = StoryObj<typeof SplitBillingForm>;
 
-const user = {
-  id: "sample id",
+const advancePayer = {
+  id: "sample id 1",
   name: "三島 智昭",
   imageUrl: "http://localhost:3000/sample_profile.png",
   tag: "#キャンプ\n#プログラミング",
 };
 
+const members = [
+  {
+    id: "sample id 1",
+    name: "三島 智昭",
+    imageUrl: "http://localhost:3000/sample_profile.png",
+    tag: "#キャンプ\n#プログラミング",
+  },
+  {
+    id: "sample id 2",
+    name: "大河 照之",
+    imageUrl: "http://localhost:3000/sample_profile.png",
+    tag: "#キャンプ\n#プログラミング",
+  },
+];
+
 export const Normal: Story = {
   args: {
-    advancePayer: user,
+    members,
+    advancePayer,
   },
 };

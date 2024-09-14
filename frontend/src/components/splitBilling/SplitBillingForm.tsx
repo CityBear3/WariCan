@@ -21,6 +21,7 @@ import { TextField } from "@/components/input/TextField";
 import { MoneyField } from "@/components/input/MoneyField";
 
 type Props = {
+  members: UserModel[];
   advancePayer: UserModel;
 };
 
@@ -46,7 +47,10 @@ const thProps = {
   style: { font: "inherit", color: "inherit", fontSize: "20px" },
 } as const;
 
-export const SplitBillingForm: React.FC<Props> = ({ advancePayer }) => (
+export const SplitBillingForm: React.FC<Props> = ({
+  members,
+  advancePayer,
+}) => (
   <NormalCard>
     <Stack
       divider={<StackDivider borderColor="gray.dark" />}
@@ -83,7 +87,7 @@ export const SplitBillingForm: React.FC<Props> = ({ advancePayer }) => (
           </Tbody>
         </Table>
         <HStack width="100%" justifyContent="end" marginTop="10px">
-          <UserImageList users={[]} />
+          <UserImageList users={members} />
         </HStack>
       </CardBody>
     </Stack>
