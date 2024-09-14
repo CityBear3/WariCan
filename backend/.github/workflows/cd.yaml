@@ -25,3 +25,4 @@ jobs:
           version: 'latest'
       - name: 'Configure Docker'
         run: gcloud auth configure-docker ${{ secrets.REGION }}-docker.pkg.dev
+
