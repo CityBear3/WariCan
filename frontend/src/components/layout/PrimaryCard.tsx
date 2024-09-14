@@ -1,4 +1,4 @@
-import { Card, CardHeader, CardBody, CardFooter } from "@chakra-ui/react";
+import { Card } from "@chakra-ui/react";
 
 type Props = {
   children: React.ReactNode;
