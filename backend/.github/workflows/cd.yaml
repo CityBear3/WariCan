@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
   push:
     branches:
-      - feature/add-workflow
+      - main
 jobs:
   deploy:
     runs-on: ubuntu-latest
