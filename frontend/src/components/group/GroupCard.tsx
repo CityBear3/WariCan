@@ -1,5 +1,5 @@
 import { NormalCard } from "@/components/layout/NormalCard";
-import { UserImageList } from "@/components/user/UserList";
+import { UserImageList } from "@/components/user/UserImageList";
 import { GroupModel } from "@/domain/group";
 import { Box, HStack, Text } from "@chakra-ui/react";
 

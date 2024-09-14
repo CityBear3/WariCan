@@ -1,6 +1,6 @@
 import { TextField } from "@/components/input/TextField";
 import { NormalCard } from "@/components/layout/NormalCard";
-import { UserImageList } from "@/components/user/UserList";
+import { UserImageList } from "@/components/user/UserImageList";
 import { Box, HStack } from "@chakra-ui/react";
 
 export const GroupForm: React.FC = () => (
