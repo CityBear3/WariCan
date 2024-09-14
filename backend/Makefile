@@ -16,3 +16,8 @@ db-migrate:
 .PHONY: db-clean
 db-clean:
 	migrate --path schema/db/migrations --database $(DB_URL) -verbose down
+
+.PHONY: gen-api-schema
+gen-api-schema:
+	rm -r ./protobuf/*
+	buf generate schema/protobuf
