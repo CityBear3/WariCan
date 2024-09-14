@@ -45,3 +45,4 @@ jobs:
           --cpu 1
           --port 3000
           --revision-suffix ${{ github.sha }}
+          --quiet
