@@ -1,5 +1,5 @@
-import { Box } from "@chakra-ui/react";
+import { PrimaryButton } from "@/components/button/PrimaryButton";
 
 export default function Home() {
-  return <Box>WariCan</Box>;
+  return <PrimaryButton />;
 }
