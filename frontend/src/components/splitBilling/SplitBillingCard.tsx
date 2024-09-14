@@ -74,7 +74,7 @@ export const SplitBillingCard: React.FC<Props> = ({ splitBilling }) => (
             <Tr>
               <Th {...thProps}>割り勘方法</Th>
               <Td {...tdProps}>
-                <SplitBillingTypeText splitBilling={splitBilling} />
+                <SplitBillingTypeText type={splitBilling.type} />
               </Td>
             </Tr>
           </Tbody>
