@@ -1,6 +1,6 @@
 import { TextField } from "@/components/input/TextField";
 import { NormalCard } from "@/components/layout/NormalCard";
-import { UserList } from "@/components/user/UserList";
+import { UserImageList } from "@/components/user/UserList";
 import { Box, HStack } from "@chakra-ui/react";
 
 export const GroupForm: React.FC = () => (
@@ -12,7 +12,7 @@ export const GroupForm: React.FC = () => (
       <TextField placeholder="説明を入力します" />
     </Box>
     <HStack width="100%" justifyContent="end" marginTop="10px">
-      <UserList users={[]} />
+      <UserImageList users={[]} />
     </HStack>
   </NormalCard>
 );

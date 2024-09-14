@@ -16,7 +16,7 @@ import {
 import { User } from "@/components/user/User";
 import { MoneyText } from "../text/MoneyText";
 import { SplitBillingTypeText } from "../text/SplitBillingTypeText";
-import { UserList } from "../user/UserList";
+import { UserImageList } from "../user/UserImageList";
 
 type Props = {
   splitBilling: SplitBillingModel;
@@ -80,7 +80,7 @@ export const SplitBillingCard: React.FC<Props> = ({ splitBilling }) => (
           </Tbody>
         </Table>
         <HStack width="100%" justifyContent="end" marginTop="10px">
-          <UserList users={splitBilling.members} />
+          <UserImageList users={splitBilling.members} />
         </HStack>
       </CardBody>
     </Stack>
