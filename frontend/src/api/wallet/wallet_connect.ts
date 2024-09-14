@@ -3,8 +3,8 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { WalletDepositV1_Request, WalletDepositV1_Response } from "./wallet_pb.js";
-import { MethodKind } from "@bufbuild/protobuf";
+import { WalletDepositV1_Request, WalletDepositV1_Response, WalletGetV1_Response } from "./wallet_pb.js";
+import { Empty, MethodKind } from "@bufbuild/protobuf";
 
 /**
  * @generated from service warican.api.wallet.Wallet
@@ -19,6 +19,15 @@ export const Wallet = {
       name: "DepositV1",
       I: WalletDepositV1_Request,
       O: WalletDepositV1_Response,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * @generated from rpc warican.api.wallet.Wallet.GetV1
+     */
+    getV1: {
+      name: "GetV1",
+      I: Empty,
+      O: WalletGetV1_Response,
       kind: MethodKind.Unary,
     },
   }

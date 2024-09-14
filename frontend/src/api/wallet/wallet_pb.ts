@@ -5,6 +5,7 @@
 
 import type { BinaryReadOptions, FieldList, JsonReadOptions, JsonValue, PartialMessage, PlainMessage } from "@bufbuild/protobuf";
 import { Message, proto3, protoInt64 } from "@bufbuild/protobuf";
+import { WalletModel } from "../common/wallet_pb.js";
 
 /**
  * @generated from message warican.api.wallet.WalletDepositV1
@@ -42,7 +43,7 @@ export class WalletDepositV1 extends Message<WalletDepositV1> {
  */
 export class WalletDepositV1_Request extends Message<WalletDepositV1_Request> {
   /**
-   * @generated from field: fixed64 amount = 2;
+   * @generated from field: fixed64 amount = 1;
    */
   amount = protoInt64.zero;
 
@@ -54,7 +55,7 @@ export class WalletDepositV1_Request extends Message<WalletDepositV1_Request> {
   static readonly runtime: typeof proto3 = proto3;
   static readonly typeName = "warican.api.wallet.WalletDepositV1.Request";
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
-    { no: 2, name: "amount", kind: "scalar", T: 6 /* ScalarType.FIXED64 */ },
+    { no: 1, name: "amount", kind: "scalar", T: 6 /* ScalarType.FIXED64 */ },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): WalletDepositV1_Request {
@@ -79,9 +80,9 @@ export class WalletDepositV1_Request extends Message<WalletDepositV1_Request> {
  */
 export class WalletDepositV1_Response extends Message<WalletDepositV1_Response> {
   /**
-   * @generated from field: warican.api.wallet.WalletDepositV1.Wallet wallet = 1;
+   * @generated from field: common.WalletModel wallet = 1;
    */
-  wallet?: WalletDepositV1_Wallet;
+  wallet?: WalletModel;
 
   constructor(data?: PartialMessage<WalletDepositV1_Response>) {
     super();
@@ -91,7 +92,7 @@ export class WalletDepositV1_Response extends Message<WalletDepositV1_Response> 
   static readonly runtime: typeof proto3 = proto3;
   static readonly typeName = "warican.api.wallet.WalletDepositV1.Response";
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
-    { no: 1, name: "wallet", kind: "message", T: WalletDepositV1_Wallet },
+    { no: 1, name: "wallet", kind: "message", T: WalletModel },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): WalletDepositV1_Response {
@@ -112,39 +113,70 @@ export class WalletDepositV1_Response extends Message<WalletDepositV1_Response> 
 }
 
 /**
- * @generated from message warican.api.wallet.WalletDepositV1.Wallet
+ * @generated from message warican.api.wallet.WalletGetV1
  */
-export class WalletDepositV1_Wallet extends Message<WalletDepositV1_Wallet> {
-  /**
-   * @generated from field: fixed64 amount = 1;
-   */
-  amount = protoInt64.zero;
-
-  constructor(data?: PartialMessage<WalletDepositV1_Wallet>) {
+export class WalletGetV1 extends Message<WalletGetV1> {
+  constructor(data?: PartialMessage<WalletGetV1>) {
     super();
     proto3.util.initPartial(data, this);
   }
 
   static readonly runtime: typeof proto3 = proto3;
-  static readonly typeName = "warican.api.wallet.WalletDepositV1.Wallet";
+  static readonly typeName = "warican.api.wallet.WalletGetV1";
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
-    { no: 1, name: "amount", kind: "scalar", T: 6 /* ScalarType.FIXED64 */ },
   ]);
 
-  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): WalletDepositV1_Wallet {
-    return new WalletDepositV1_Wallet().fromBinary(bytes, options);
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): WalletGetV1 {
+    return new WalletGetV1().fromBinary(bytes, options);
   }
 
-  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): WalletDepositV1_Wallet {
-    return new WalletDepositV1_Wallet().fromJson(jsonValue, options);
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): WalletGetV1 {
+    return new WalletGetV1().fromJson(jsonValue, options);
   }
 
-  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): WalletDepositV1_Wallet {
-    return new WalletDepositV1_Wallet().fromJsonString(jsonString, options);
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): WalletGetV1 {
+    return new WalletGetV1().fromJsonString(jsonString, options);
   }
 
-  static equals(a: WalletDepositV1_Wallet | PlainMessage<WalletDepositV1_Wallet> | undefined, b: WalletDepositV1_Wallet | PlainMessage<WalletDepositV1_Wallet> | undefined): boolean {
-    return proto3.util.equals(WalletDepositV1_Wallet, a, b);
+  static equals(a: WalletGetV1 | PlainMessage<WalletGetV1> | undefined, b: WalletGetV1 | PlainMessage<WalletGetV1> | undefined): boolean {
+    return proto3.util.equals(WalletGetV1, a, b);
+  }
+}
+
+/**
+ * @generated from message warican.api.wallet.WalletGetV1.Response
+ */
+export class WalletGetV1_Response extends Message<WalletGetV1_Response> {
+  /**
+   * @generated from field: common.WalletModel wallet = 1;
+   */
+  wallet?: WalletModel;
+
+  constructor(data?: PartialMessage<WalletGetV1_Response>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "warican.api.wallet.WalletGetV1.Response";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "wallet", kind: "message", T: WalletModel },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): WalletGetV1_Response {
+    return new WalletGetV1_Response().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): WalletGetV1_Response {
+    return new WalletGetV1_Response().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): WalletGetV1_Response {
+    return new WalletGetV1_Response().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: WalletGetV1_Response | PlainMessage<WalletGetV1_Response> | undefined, b: WalletGetV1_Response | PlainMessage<WalletGetV1_Response> | undefined): boolean {
+    return proto3.util.equals(WalletGetV1_Response, a, b);
   }
 }
 
