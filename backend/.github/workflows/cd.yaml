@@ -1,9 +1,12 @@
 name: ci/cd
 on:
-  workflow_dispatch:
   push:
     branches:
       - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -25,3 +28,4 @@ jobs:
           version: 'latest'
       - name: 'Configure Docker'
         run: gcloud auth configure-docker ${{ secrets.REGION }}-docker.pkg.dev
+
