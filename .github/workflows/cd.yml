@@ -38,6 +38,7 @@ jobs:
           gcloud beta run deploy warican-ui 
           --image ${{ secrets.REGION }}-docker.pkg.dev/${{ secrets.GOOGLE_PROJECT_ID }}/${{ secrets.ARTIFACT_REGISTRY_REPOSITORY }}/warican-ui:${{ github.sha }}
           --region ${{ secrets.REGION }}
+          --service-account ${{ secrets.RUN_UI_SERVICE_ACCOUNT }}
           --platform managed --region ${{ secrets.REGION }}
           --allow-unauthenticated
           --service-min-instances 0
