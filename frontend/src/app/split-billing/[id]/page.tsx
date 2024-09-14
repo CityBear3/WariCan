@@ -20,13 +20,13 @@ const SplitBilling: React.FC<Props> = ({ params: { id } }) => {
     {
       id: "sample id 1",
       name: "三島 智昭",
-      imageUrl: "http://localhost:3000/sample_profile.png",
+      imageUrl: "/sample_profile.png",
       tag: "#キャンプ\n#プログラミング",
     },
     {
       id: "sample id 2",
       name: "大河 照之",
-      imageUrl: "http://localhost:3000/sample_profile.png",
+      imageUrl: "/sample_profile.png",
       tag: "#キャンプ\n#プログラミング",
     },
   ];

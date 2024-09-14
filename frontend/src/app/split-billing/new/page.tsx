@@ -1,48 +1,43 @@
-"use client";
-
 import { HeaderSpacer } from "@/app/header";
 import { PrimaryButton } from "@/components/button/PrimaryButton";
-import { SecondaryButton } from "@/components/button/SecondaryButton";
-import { GroupForm } from "@/components/group/GroupForm";
+import { FoldableSection } from "@/components/layout/FoldableSection";
 import { Section } from "@/components/layout/Section";
+import { SplitBillingForm } from "@/components/splitBilling/SplitBillingForm";
 import { UserList } from "@/components/user/UserList";
-import { UserModel } from "@/domain/user";
 import { HStack } from "@chakra-ui/react";
 
-const CreateGroup: React.FC = () => {
-  const members: UserModel[] = [
+export const CreateSplitBilling: React.FC = () => {
+  const user = {
+    id: "sample id",
+    name: "三島 智昭",
+    imageUrl: "/sample_profile.png",
+    tag: "#キャンプ\n#プログラミング",
+  };
+
+  const members = [
     {
       id: "sample id 1",
       name: "三島 智昭",
-      imageUrl: "/sample_profile.png",
+      imageUrl: "http://localhost:3000/sample_profile.png",
       tag: "#キャンプ\n#プログラミング",
     },
     {
       id: "sample id 2",
       name: "大河 照之",
-      imageUrl: "/sample_profile.png",
+      imageUrl: "http://localhost:3000/sample_profile.png",
       tag: "#キャンプ\n#プログラミング",
     },
   ];
 
-  const inviteButton = (
-    <SecondaryButton
-      label="お誘いを送る"
-      fontSize="20px"
-      padding="25px"
-      onClick={() => alert("clicked")}
-    />
-  );
-
   return (
     <>
       <HeaderSpacer />
-      <Section title="グループを作成する" margin="20px">
-        <GroupForm />
+      <Section title="割り勘を作成する" margin="20px">
+        <SplitBillingForm advancePayer={user} members={members} />
       </Section>
-      <Section title="メンバー" margin="20px" side={inviteButton}>
+      <FoldableSection title="メンバー" margin="20px">
         <UserList users={members} />
-      </Section>
+      </FoldableSection>
       <HStack width="100%" justifyContent="center" marginTop="10px">
         <PrimaryButton label="作成する" fontSize="20px" padding="25px 80px" />
       </HStack>
@@ -50,4 +45,4 @@ const CreateGroup: React.FC = () => {
   );
 };
 
-export default CreateGroup;
+export default CreateSplitBilling;

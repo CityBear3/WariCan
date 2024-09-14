@@ -1,9 +1,9 @@
 import { SplitBillingModel } from "@/domain/splitBilling";
 import { NormalCard } from "../layout/NormalCard";
 import {
+  Card,
   CardBody,
   CardHeader,
-  Heading,
   HStack,
   Stack,
   StackDivider,
@@ -14,13 +14,17 @@ import {
   Tr,
 } from "@chakra-ui/react";
 import { User } from "@/components/user/User";
-import { MoneyText } from "../text/MoneyText";
 import { SplitBillingTypeText } from "../text/SplitBillingTypeText";
 import { UserImageList } from "../user/UserImageList";
+import { UserModel } from "@/domain/user";
+import { TextField } from "@/components/input/TextField";
+import { MoneyField } from "@/components/input/MoneyField";
+import { ComponentProps } from "react";
 
 type Props = {
-  splitBilling: SplitBillingModel;
-};
+  members: UserModel[];
+  advancePayer: UserModel;
+} & ComponentProps<typeof Card>;
 
 const tableProps = {
   borderStyle: "none",
@@ -44,17 +48,18 @@ const thProps = {
   style: { font: "inherit", color: "inherit", fontSize: "20px" },
 } as const;
 
-export const SplitBillingCard: React.FC<Props> = ({ splitBilling }) => (
-  <NormalCard>
+export const SplitBillingForm: React.FC<Props> = ({
+  members,
+  advancePayer,
+}) => (
+  <NormalCard marginTop="20px">
     <Stack
       divider={<StackDivider borderColor="gray.dark" />}
       spacing="4"
       margin="10px 20px"
     >
       <CardHeader padding="0" marginTop="20px">
-        <Heading size="md" textAlign="center">
-          {splitBilling.name}
-        </Heading>
+        <TextField placeholder="説明を入力します" fontSize="20px" />
       </CardHeader>
       <CardBody padding="0">
         <Table>
@@ -62,25 +67,25 @@ export const SplitBillingCard: React.FC<Props> = ({ splitBilling }) => (
             <Tr>
               <Th {...thProps}>立て替え</Th>
               <Td {...tdProps}>
-                <User user={splitBilling.advancePayer} />
+                <User user={advancePayer} />
               </Td>
             </Tr>
             <Tr>
               <Th {...thProps}>合計金額</Th>
               <Td {...tdProps}>
-                <MoneyText amount={splitBilling.amount} />
+                <MoneyField placeholder="金額を入力します" fontSize="20px" />
               </Td>
             </Tr>
             <Tr>
               <Th {...thProps}>割り勘方法</Th>
               <Td {...tdProps}>
-                <SplitBillingTypeText type={splitBilling.type} />
+                <SplitBillingTypeText type={"EQUAL_SPLIT"} />
               </Td>
             </Tr>
           </Tbody>
         </Table>
         <HStack width="100%" justifyContent="end" marginTop="10px">
-          <UserImageList users={splitBilling.members} />
+          <UserImageList users={members} />
         </HStack>
       </CardBody>
     </Stack>
