@@ -5,9 +5,9 @@ import { PrimaryButton } from "@/components/button/PrimaryButton";
 import { SecondaryButton } from "@/components/button/SecondaryButton";
 import { GroupForm } from "@/components/group/GroupForm";
 import { Section } from "@/components/layout/Section";
-import { User } from "@/components/user/User";
+import { UserList } from "@/components/user/UserList";
 import { UserModel } from "@/domain/user";
-import { HStack, List, ListItem } from "@chakra-ui/react";
+import { HStack } from "@chakra-ui/react";
 
 const CreateGroup: React.FC = () => {
   const members: UserModel[] = [
@@ -41,13 +41,7 @@ const CreateGroup: React.FC = () => {
         <GroupForm />
       </Section>
       <Section title="メンバー" margin="20px" side={inviteButton}>
-        <List>
-          {members.map((member) => (
-            <ListItem key={member.id} margin="20px 0px">
-              <User user={member} />
-            </ListItem>
-          ))}
-        </List>
+        <UserList users={members} />
       </Section>
       <HStack width="100%" justifyContent="center" marginTop="10px">
         <PrimaryButton label="作成する" fontSize="20px" padding="25px 80px" />
