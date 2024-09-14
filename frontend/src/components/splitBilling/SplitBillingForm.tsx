@@ -1,9 +1,9 @@
 import { SplitBillingModel } from "@/domain/splitBilling";
 import { NormalCard } from "../layout/NormalCard";
 import {
+  Card,
   CardBody,
   CardHeader,
-  Heading,
   HStack,
   Stack,
   StackDivider,
@@ -19,11 +19,12 @@ import { UserImageList } from "../user/UserImageList";
 import { UserModel } from "@/domain/user";
 import { TextField } from "@/components/input/TextField";
 import { MoneyField } from "@/components/input/MoneyField";
+import { ComponentProps } from "react";
 
 type Props = {
   members: UserModel[];
   advancePayer: UserModel;
-};
+} & ComponentProps<typeof Card>;
 
 const tableProps = {
   borderStyle: "none",
@@ -51,14 +52,14 @@ export const SplitBillingForm: React.FC<Props> = ({
   members,
   advancePayer,
 }) => (
-  <NormalCard>
+  <NormalCard marginTop="20px">
     <Stack
       divider={<StackDivider borderColor="gray.dark" />}
       spacing="4"
       margin="10px 20px"
     >
       <CardHeader padding="0" marginTop="20px">
-        <TextField placeholder="説明を入力してください" fontSize="20px" />
+        <TextField placeholder="説明を入力します" fontSize="20px" />
       </CardHeader>
       <CardBody padding="0">
         <Table>
@@ -72,10 +73,7 @@ export const SplitBillingForm: React.FC<Props> = ({
             <Tr>
               <Th {...thProps}>合計金額</Th>
               <Td {...tdProps}>
-                <MoneyField
-                  placeholder="金額を入力してください"
-                  fontSize="20px"
-                />
+                <MoneyField placeholder="金額を入力します" fontSize="20px" />
               </Td>
             </Tr>
             <Tr>
