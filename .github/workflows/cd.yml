@@ -32,3 +32,14 @@ jobs:
         run: docker build -t ${{ secrets.REGION }}-docker.pkg.dev/${{ secrets.GOOGLE_PROJECT_ID }}/${{ secrets.ARTIFACT_REGISTRY_REPOSITORY }}/warican-ui:${{ github.sha }} ./frontend
       - name: 'Push Docker Image (ui)'
         run: docker push ${{ secrets.REGION }}-docker.pkg.dev/${{ secrets.GOOGLE_PROJECT_ID }}/${{ secrets.ARTIFACT_REGISTRY_REPOSITORY }}/warican-ui:${{ github.sha }}
+      - name: 'Deploy to Cloud Run (ui)'
+        run: gcloud run deploy warican-ui \
+          --image ${{ secrets.REGION }}-docker.pkg.dev/${{ secrets.GOOGLE_PROJECT_ID }}/${{ secrets.ARTIFACT_REGISTRY_REPOSITORY }}/warican-ui:${{ github.sha }} \
+          --region ${{ secrets.REGION }} \
+          --platform managed --region ${{ secrets.REGION }} \
+          --allow-unauthenticated \
+          --service-min-instances 0 \
+          --memory 512Mi \
+          --cpu 1 \
+          --port 3000 \
+          --revision-suffix ${{ github.sha }}
