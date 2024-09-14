@@ -1,0 +1,28 @@
+syntax = "proto3";
+package warican.api.wallet;
+
+option go_package = "github.com/CityBear3/WariCan/protobuf/wallet;walletApi";
+
+import "google/protobuf/empty.proto";
+import "common/wallet.proto";
+
+service Wallet {
+  rpc DepositV1(WalletDepositV1.Request) returns (WalletDepositV1.Response){}
+  rpc GetV1(google.protobuf.Empty) returns (WalletGetV1.Response){}
+}
+
+message WalletDepositV1 {
+  message Request {
+    fixed64 amount = 1;
+  }
+
+  message Response {
+    common.WalletModel wallet = 1;
+  }
+}
+
+message WalletGetV1 {
+  message Response {
+    common.WalletModel wallet = 1;
+  }
+}
