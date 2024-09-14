@@ -6,7 +6,7 @@ type Props = {
   users: UserModel[];
 };
 
-export const UserList: React.FC<Props> = ({ users }) => (
+export const UserImageList: React.FC<Props> = ({ users }) => (
   <HStack spacing="10px">
     {users.map((user) => (
       <UserImage user={user} key={user.id} size={30} />
