@@ -1,7 +1,5 @@
 import type { Metadata } from "next";
 import { Providers } from "./providers";
-import { Header, HeaderSpacer } from "./header";
-import { VStack } from "@chakra-ui/react";
 import { App } from "./app";
 
 export const metadata: Metadata = {

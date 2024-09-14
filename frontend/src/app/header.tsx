@@ -3,11 +3,11 @@
 import { Logo } from "@/components/text/Logo";
 import { UserImageButton } from "@/components/user/UserImageButton";
 import { UserModel } from "@/domain/user";
-import { Box, Button, HStack } from "@chakra-ui/react";
+import { Box, HStack } from "@chakra-ui/react";
 
 type Props = {
   user: UserModel;
-  onProfileToggle: () => void;
+  onProfileOpen: () => void;
 };
 
 const headerProps = {
@@ -22,11 +22,11 @@ const logoProps = {
   color: "white",
 };
 
-export const Header: React.FC<Props> = ({ user, onProfileToggle }) => (
+export const Header: React.FC<Props> = ({ user, onProfileOpen }) => (
   <Box position="fixed" {...headerProps}>
     <HStack height="50px" alignContent="center" justifyContent="space-between">
       <Logo {...logoProps} />
-      <UserImageButton user={user} onClick={onProfileToggle} />
+      <UserImageButton user={user} onClick={onProfileOpen} />
     </HStack>
   </Box>
 );

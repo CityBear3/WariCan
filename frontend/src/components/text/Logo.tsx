@@ -6,7 +6,7 @@ const logoProps = {
   fontWeight: "bold",
 };
 
-type Props = {} & ComponentProps<typeof Text>;
+type Props = ComponentProps<typeof Text>;
 
 export const Logo: React.FC<Props> = ({ ...props }) => (
   <Text {...logoProps} {...props}>
