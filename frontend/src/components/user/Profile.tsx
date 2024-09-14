@@ -3,13 +3,14 @@ import { NormalCard } from "../layout/NormalCard";
 import { Box, CardBody, Image, VStack } from "@chakra-ui/react";
 import { UserName } from "./UserName";
 import { TagText } from "@/components/text/TagText";
+import { ComponentProps } from "react";
 
 type Props = {
   user: UserModel;
 };
 
 const cardProps = {
-  width: "420px",
+  width: "90%",
   paddingBottom: "20px",
 };
 
