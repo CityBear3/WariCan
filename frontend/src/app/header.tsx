@@ -3,7 +3,7 @@
 import { Logo } from "@/components/text/Logo";
 import { UserImageButton } from "@/components/user/UserImageButton";
 import { UserModel } from "@/domain/user";
-import { Box, Button, HStack } from "@chakra-ui/react";
+import { Box, HStack } from "@chakra-ui/react";
 
 type Props = {
   user: UserModel;
