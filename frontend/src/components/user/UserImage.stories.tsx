@@ -35,3 +35,11 @@ export const Pending: Story = {
     withIcon: "pending",
   },
 };
+
+export const Small: Story = {
+  args: {
+    user,
+    withIcon: "pending",
+    size: 30,
+  },
+};
