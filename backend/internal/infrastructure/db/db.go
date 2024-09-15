@@ -5,22 +5,32 @@ import (
 
 	"github.com/CityBear3/WariCan/internal/domain/transaction"
 	"github.com/jackc/pgx/v5"
+	"github.com/jackc/pgx/v5/pgxpool"
 )
 
 type Connection struct {
-	conn *pgx.Conn
+	conn *pgxpool.Pool
 }
 
 func NewConnection(ctx context.Context, source string) *Connection {
-	conn, err := pgx.Connect(ctx, source)
+	config, err := pgxpool.ParseConfig(source)
 	if err != nil {
 		panic(err)
 	}
 
-	return &Connection{conn: conn}
+	pool, err := pgxpool.NewWithConfig(ctx, config)
+	if err != nil {
+		panic(err)
+	}
+
+	if err := pool.Ping(ctx); err != nil {
+		panic(err)
+	}
+
+	return &Connection{conn: pool}
 }
 
-func (c Connection) Conn() *pgx.Conn {
+func (c Connection) Conn() *pgxpool.Pool {
 	return c.conn
 }
 
