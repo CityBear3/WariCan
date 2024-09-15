@@ -12,6 +12,7 @@ import (
 	"connectrpc.com/connect"
 	firebase "firebase.google.com/go/v4"
 	"firebase.google.com/go/v4/auth"
+	"github.com/CityBear3/WariCan/handler/connection_api"
 	"github.com/CityBear3/WariCan/handler/group_api"
 	"github.com/CityBear3/WariCan/handler/wallet_api"
 	"github.com/CityBear3/WariCan/internal/app_service/group_app_service"
@@ -21,6 +22,7 @@ import (
 	"github.com/CityBear3/WariCan/internal/infrastructure/db"
 	"github.com/CityBear3/WariCan/internal/infrastructure/group_repository"
 	"github.com/CityBear3/WariCan/internal/infrastructure/wallet_repository"
+	"github.com/CityBear3/WariCan/protobuf/connection/connectionApiconnect"
 	"github.com/CityBear3/WariCan/protobuf/group/groupApiconnect"
 	"github.com/CityBear3/WariCan/protobuf/wallet/walletApiconnect"
 	"github.com/rs/cors"
@@ -85,10 +87,16 @@ func main() {
 		interceptors,
 	)
 
+	connectionPath, connectionHandler := connectionApiconnect.NewConnectionHandler(
+		connection_api.NewHandler(dbConn),
+		interceptors,
+	)
+
 	mux := http.NewServeMux()
 
 	mux.Handle(walletPath, walletHandler)
 	mux.Handle(groupPath, groupHandler)
+	mux.Handle(connectionPath, connectionHandler)
 
 	svr := http.Server{
 		Addr: fmt.Sprintf("%s:%s", serverConfig.Host, serverConfig.Port),
