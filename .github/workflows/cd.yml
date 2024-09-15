@@ -62,6 +62,6 @@ jobs:
           --cpu 1
           --port 8080
           --add-cloudsql-instances ${{ secrets.CLOUD_SQL_INSTANCE_NAME }}
-          --update-env-vars DB_HOST=${{ DB_HOST }}
+          --update-env-vars DB_HOST=${{ secrets.DB_HOST }}
           --update-secrets DB_USER=DB_USER:latest,DB_PASSWORD=DB_PASSWORD:latest
           --revision-suffix ${{ github.sha }}
