@@ -1,8 +1,15 @@
 package main
 
 import (
+	"connectrpc.com/connect"
 	"context"
 	"fmt"
+	"github.com/CityBear3/WariCan/handler/wallet_api"
+	"github.com/CityBear3/WariCan/internal/app_service/wallet_app_service"
+	"github.com/CityBear3/WariCan/internal/infrastructure/connectrpc/interceptor"
+	"github.com/CityBear3/WariCan/internal/infrastructure/db"
+	"github.com/CityBear3/WariCan/internal/infrastructure/wallet_repository"
+	"github.com/CityBear3/WariCan/protobuf/wallet/walletApiconnect"
 	"github.com/rs/cors"
 	"golang.org/x/net/http2"
 	"golang.org/x/net/http2/h2c"
@@ -24,16 +31,26 @@ func main() {
 		port = "8080"
 	}
 
-	//interceptors := connect.WithInterceptors(
-	//	interceptor.NewAppContextInterceptor(),
-	//	interceptor.NewRequestLogInterceptor(),
-	//)
+	interceptors := connect.WithInterceptors(
+		interceptor.NewAppContextInterceptor(),
+		interceptor.NewRequestLogInterceptor(),
+	)
 
-	//walletPath, walletHandler := walletApiconnect.NewWalletHandler()
+	dbConn := db.NewConnection("")
+
+	walletApplicationService := wallet_app_service.NewService(
+		dbConn,
+		wallet_repository.NewUserRepoFunc(),
+	)
+
+	walletPath, walletHandler := walletApiconnect.NewWalletHandler(
+		wallet_api.NewHandler(walletApplicationService),
+		interceptors,
+	)
 
 	mux := http.NewServeMux()
 
-	//mux.Handle(walletPath, walletHandler)
+	mux.Handle(walletPath, walletHandler)
 
 	svr := http.Server{
 		Addr: fmt.Sprintf("%s:%s", host, port),
