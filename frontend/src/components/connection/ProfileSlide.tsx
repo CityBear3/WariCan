@@ -8,10 +8,17 @@ import "./ProfileSlide.css";
 type Props = {
   focusId?: string;
   users: UserModel[];
+  onProfileChange?: (idx: number) => void;
 } & ComponentProps<typeof Box>;
 
-export const ProfileSlide: React.FC<Props> = ({ focusId, users, ...props }) => {
+export const ProfileSlide: React.FC<Props> = ({
+  focusId,
+  users,
+  onProfileChange,
+  ...props
+}) => {
   const initialIndex = users.findIndex((user) => user.id === focusId);
+  const displayUsers = users.length < 2 ? [...users, ...users] : users;
 
   const settings = {
     initialSlide: focusId && initialIndex >= 0 ? initialIndex : 0,
@@ -37,8 +44,11 @@ export const ProfileSlide: React.FC<Props> = ({ focusId, users, ...props }) => {
         href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css"
       />
 
-      <Slider {...settings}>
-        {users.map((user) => (
+      <Slider
+        {...settings}
+        afterChange={(idx) => onProfileChange && onProfileChange(idx)}
+      >
+        {displayUsers.map((user) => (
           <Box key={user.id}>
             <HStack justifyContent="center" key={user.id}>
               <Profile user={user} />

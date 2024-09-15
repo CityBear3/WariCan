@@ -1,5 +1,6 @@
 "use client";
 
+import { useConnectedUsers } from "@/api/hooks/connection";
 import { useGroup } from "@/api/hooks/group";
 import { HeaderSpacer } from "@/app/header";
 import { PrimaryButton } from "@/components/button/PrimaryButton";
@@ -8,7 +9,6 @@ import { GroupCard } from "@/components/group/GroupCard";
 import { FoldableSection } from "@/components/layout/FoldableSection";
 import { SplitBillingRow } from "@/components/splitBilling/SplitBillingRow";
 import { UserList } from "@/components/user/UserList";
-import { UserModel } from "@/domain/user";
 import { Box, HStack, List, ListItem, VStack } from "@chakra-ui/react";
 
 type Props = {
@@ -18,23 +18,12 @@ type Props = {
 };
 
 const Group: React.FC<Props> = ({ params: { id } }) => {
-  const users: UserModel[] = [
-    {
-      id: "cf290bee-9eb4-4e28-bea9-c8c3b37cb621",
-      name: "三島 智昭",
-      imageUrl: "/sample_profile.png",
-      tag: "#キャンプ\n#プログラミング",
-    },
-    {
-      id: "cf290bee-9eb4-4e28-bea9-c8c3b37cb622",
-      name: "大河 照之",
-      imageUrl: "/sample_profile.png",
-      tag: "#キャンプ\n#プログラミング",
-    },
-  ];
+  const { users, ...usersState } = useConnectedUsers();
 
-  const { group, splitBillings, isLoading, isError } = useGroup({ id });
-  if (isLoading || isError) return <></>;
+  const { group, splitBillings, ...groupState } = useGroup({ id });
+
+  if (usersState.isLoading || usersState.isError || !users) return <></>;
+  if (groupState.isLoading || groupState.isError) return <></>;
   if (!group || !splitBillings) return <></>;
 
   const members = users.filter((user) => group.members.includes(user.id));

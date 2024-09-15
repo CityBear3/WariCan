@@ -8,13 +8,13 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { v4 as uuidV4 } from "uuid";
 
 const finalTransport = createConnectTransport({
-  baseUrl: "http://localhost:8080",
+  baseUrl: process.env.NEXT_PUBLIC_API_ENDPOINT || "http://localhost:8080",
   interceptors: [
     (next) => (request) => {
       request.header.append("X-Idempotency-Key", uuidV4());
       request.header.append(
         "X-Development-User",
-        "CF290BEE-9EB4-4E28-BEA9-C8C3B37CB621"
+        process.env.NEXT_PUBLIC_DEVELOPMENT_USER || ""
       );
       return next(request);
     },

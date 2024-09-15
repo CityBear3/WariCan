@@ -5,9 +5,10 @@ import { ComponentProps } from "react";
 
 type Props = {
   keyword: string;
+  onDelete?: () => void;
 } & ComponentProps<typeof Box>;
 
-export const Keyword: React.FC<Props> = ({ keyword, ...props }) => {
+export const Keyword: React.FC<Props> = ({ keyword, onDelete, ...props }) => {
   return (
     <Box display="inline-block" {...props}>
       <NormalCard borderRadius="10px">
@@ -19,6 +20,7 @@ export const Keyword: React.FC<Props> = ({ keyword, ...props }) => {
               colorScheme="transparent"
               height="100%"
               icon={<CloseIcon color="gray.dark" boxSize="0.8em" />}
+              onClick={onDelete}
             ></IconButton>
           </HStack>
         </CardBody>

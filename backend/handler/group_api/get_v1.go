@@ -41,10 +41,6 @@ func (h Handler) GetV1(
 			return err
 		}
 
-		if len(splitBillingRows) == 0 {
-			return connect.NewError(connect.CodeNotFound, errors.New("split billing not found"))
-		}
-
 		return nil
 	}); err != nil {
 		log.Println("failed to begin transaction")
