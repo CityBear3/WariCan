@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Box,
   Collapse,
@@ -6,14 +8,15 @@ import {
   IconButton,
   useDisclosure,
 } from "@chakra-ui/react";
-import { ReactNode } from "react";
+import { ComponentProps, ReactNode } from "react";
 import { DownIcon } from "../icon/DownIcon";
 import { RightIcon } from "../icon/RightIcon";
 
 type Props = {
   title: string;
   children: ReactNode;
-};
+  side?: ReactNode;
+} & ComponentProps<typeof Box>;
 
 const iconButtonProps = {
   bg: "transparent",
@@ -42,18 +45,26 @@ const CloseIcon: React.FC<IconProps> = ({ onClick }) => (
   />
 );
 
-export const FoldableSection: React.FC<Props> = ({ children, title }) => {
+export const FoldableSection: React.FC<Props> = ({
+  children,
+  title,
+  side,
+  ...props
+}) => {
   const { isOpen, onToggle } = useDisclosure();
 
   return (
-    <Box>
+    <Box {...props}>
       <HStack spacing="0">
         {isOpen ? (
           <OpenIcon onClick={onToggle} />
         ) : (
           <CloseIcon onClick={onToggle} />
         )}
-        <Heading size="lg">{title}</Heading>
+        <HStack justifyContent="space-between" flex={1}>
+          <Heading size="lg">{title}</Heading>
+          {side || <div></div>}
+        </HStack>
       </HStack>
       <Collapse in={isOpen} animateOpacity>
         {children}

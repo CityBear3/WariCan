@@ -1,12 +1,13 @@
 import { UserModel } from "@/domain/user";
 import { NormalCard } from "../layout/NormalCard";
-import { Box, CardBody, Image, VStack } from "@chakra-ui/react";
+import { Box, Card, CardBody, Image, VStack } from "@chakra-ui/react";
 import { UserName } from "./UserName";
 import { TagText } from "@/components/text/TagText";
+import { ComponentProps } from "react";
 
 type Props = {
   user: UserModel;
-};
+} & ComponentProps<typeof Card>;
 
 const cardProps = {
   width: "90%",
@@ -22,8 +23,8 @@ const tagBoxProps = {
   width: "90%",
 };
 
-export const Profile: React.FC<Props> = ({ user }) => (
-  <NormalCard {...cardProps}>
+export const Profile: React.FC<Props> = ({ user, ...props }) => (
+  <NormalCard {...cardProps} {...props}>
     <CardBody padding="0" boxSizing="border-box" height="200px">
       <VStack>
         <Image src={user.imageUrl} {...imageProps} />

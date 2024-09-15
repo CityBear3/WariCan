@@ -1,0 +1,7 @@
+export DB_HOST=localhost
+export DB_PORT=15432
+export DB_NAME=warican
+export DB_USER=warican
+export DB_PASSWORD=warican
+export DB_SSLMODE=disable
+export IS_DEVELOPMENT=false
