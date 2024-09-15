@@ -1,4 +1,3 @@
-import { SplitBillingModel } from "@/domain/splitBilling";
 import { NormalCard } from "../layout/NormalCard";
 import {
   Card,
@@ -59,7 +58,12 @@ export const SplitBillingForm: React.FC<Props> = ({
       margin="10px 20px"
     >
       <CardHeader padding="0" marginTop="20px">
-        <TextField placeholder="説明を入力します" fontSize="20px" />
+        <TextField
+          placeholder="説明を入力します"
+          name="description"
+          type="text"
+          fontSize="20px"
+        />
       </CardHeader>
       <CardBody padding="0">
         <Table>
@@ -73,7 +77,12 @@ export const SplitBillingForm: React.FC<Props> = ({
             <Tr>
               <Th {...thProps}>合計金額</Th>
               <Td {...tdProps}>
-                <MoneyField placeholder="金額を入力します" fontSize="20px" />
+                <MoneyField
+                  placeholder="金額を入力します"
+                  name="amount"
+                  type="number"
+                  fontSize="20px"
+                />
               </Td>
             </Tr>
             <Tr>
