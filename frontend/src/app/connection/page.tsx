@@ -6,13 +6,16 @@ import { Keyword } from "@/components/connection/Keyword";
 import { ProfileTable } from "@/components/connection/ProfileTable";
 import { TextField } from "@/components/input/TextField";
 import { Box } from "@chakra-ui/react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
-import { connectionPath } from "@/app/path";
+import { connectionSliderPath } from "@/app/path";
 
 const ConnectionBoard: React.FC = () => {
   const router = useRouter();
+
+  const searchParams = useSearchParams();
+  const members = searchParams.getAll("member");
 
   type FormValues = {
     keyword: string;
@@ -34,13 +37,14 @@ const ConnectionBoard: React.FC = () => {
   };
 
   const onProfileClick = (userId: string) => {
-    router.push(connectionPath(userId, keywords));
+    router.push(connectionSliderPath(userId, { keywords, members }));
   };
 
-  const filteredUsers = users.filter((user) =>
-    keywords.every(
-      (keyword) => user.tag.includes(keyword) || user.name.includes(keyword)
-    )
+  const filteredUsers = users.filter(
+    (user) =>
+      keywords.every(
+        (keyword) => user.tag.includes(keyword) || user.name.includes(keyword)
+      ) && !members.includes(user.id)
   );
 
   return (

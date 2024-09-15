@@ -7,6 +7,7 @@ import (
 	"github.com/CityBear3/WariCan/internal/domain/group"
 	"github.com/CityBear3/WariCan/internal/domain/transaction"
 	"github.com/CityBear3/WariCan/internal/infrastructure/db/dao"
+	"github.com/google/uuid"
 	"github.com/jackc/pgx/v5/pgtype"
 )
 
@@ -32,6 +33,7 @@ func (r Repository) Create(ctx context.Context, actx app_context.AppContext, cre
 		OwnerID:     creatingGroup.OwnerID().UUID(),
 		CreatedAt: pgtype.Timestamptz{
 			Time: actx.CurrentTime,
+			Valid: true,
 		},
 	}
 
@@ -42,11 +44,12 @@ func (r Repository) Create(ctx context.Context, actx app_context.AppContext, cre
 	var memberParams []dao.CreateGroupMemberParams
 	for _, member := range creatingGroup.Members() {
 		memberParams = append(memberParams, dao.CreateGroupMemberParams{
-			ID:      creatingGroup.Id().UUID(),
+			ID:      uuid.New(),
 			GroupID: creatingGroup.Id().UUID(),
 			UserID:  member.UUID(),
 			CreatedAt: pgtype.Timestamptz{
 				Time: actx.CurrentTime,
+				Valid: true,
 			},
 		})
 	}
