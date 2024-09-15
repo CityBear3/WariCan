@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package common;
+
+option go_package = "github.com/CityBear3/WariCan/protobuf/common;commonModel";
+
+message WalletModel {
+  string id = 1;
+  string user_id = 2;
+  Balance balance = 3;
+
+  message Balance {
+    double amount = 1;
+  }
+}
+
+
