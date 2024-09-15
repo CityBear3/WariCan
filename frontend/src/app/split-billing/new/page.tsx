@@ -11,7 +11,7 @@ import { HStack } from "@chakra-ui/react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { FormProvider, useForm } from "react-hook-form";
 
-export const CreateSplitBilling: React.FC = () => {
+const CreateSplitBilling: React.FC = () => {
   const user = {
     id: "sample id",
     name: "三島 智昭",
