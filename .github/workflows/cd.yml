@@ -45,7 +45,10 @@ jobs:
           --use-http2
           --add-cloudsql-instances ${{ secrets.CLOUD_SQL_INSTANCE_NAME }}
           --update-env-vars DB_HOST=${{ secrets.DB_HOST }}
-          --update-secrets DB_USER=DB_USER:latest,DB_PASSWORD=DB_PASSWORD:latest
+          --update-env-vars IS_DEVELOPMENT=true
+          --update-secrets DB_USER=DB_USER:latest
+          --update-secrets DB_PASSWORD=DB_PASSWORD:latest
+          --update-secrets DB_NAME=DB_NAME:latest
           --revision-suffix ${{ github.sha }}
 #      - name: 'Build Docker Image (ui)'
 #        run: docker build -t ${{ secrets.REGION }}-docker.pkg.dev/${{ secrets.GOOGLE_PROJECT_ID }}/${{ secrets.ARTIFACT_REGISTRY_REPOSITORY }}/warican-ui:${{ github.sha }} ./frontend
