@@ -27,8 +27,17 @@ type Repository struct {
 }
 
 func (r Repository) GetByUserID(ctx context.Context, actx app_context.AppContext, userID user.ID) (*wallet.Wallet, error) {
-	// TODO: Implement this
-	return nil, nil
+	result, err := r.queries.GetWalletByUserID(ctx, userID.UUID()); 
+	if( err!= nil) {
+		return nil, err
+	}
+
+	amount, err := strconv.ParseFloat(result.Balance, 64)
+	if err != nil {
+		return nil, err
+	}
+
+	return wallet.NewWallet(wallet.ID(result.ID), user.ID(result.UserID), amount)
 }
 
 func (r Repository) UpdateBalance(ctx context.Context, actx app_context.AppContext, w *wallet.Wallet) error {
