@@ -30,11 +30,11 @@ type Settlement struct {
 
 func (s Settlement) Done() Settlement {
 	return Settlement{
-		id:              s.id,
-		advancedPayerID: s.advancedPayerID,
-		payerID:         s.payerID,
-		splitBillingID:  s.splitBillingID,
-		amount:          s.amount,
-		status:          SettlementStatusDone,
+		id:             s.id,
+		toUserID:       s.toUserID,
+		fromUserID:     s.fromUserID,
+		splitBillingID: s.splitBillingID,
+		amount:         s.amount,
+		status:         SettlementStatusDone,
 	}
 }
