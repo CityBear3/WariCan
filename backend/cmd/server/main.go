@@ -41,8 +41,17 @@ func main() {
 		log.Println("Production mode")
 	}
 
-	dbURL := fmt.Sprintf("postgres://%s:%s@%s:%s/%s?sslmode=%s",
-		dbConfig.User, dbConfig.Password, dbConfig.Host, dbConfig.Port, dbConfig.Name, dbConfig.SSLMode)
+	dbURL := fmt.Sprintf("user=%s password=%s host=%s database=%s",
+		dbConfig.User, dbConfig.Password, dbConfig.Host, dbConfig.Name)
+
+	if dbConfig.Port != "" {
+		dbURL += fmt.Sprintf(" port=%s", dbConfig.Port)
+	}
+
+	if dbConfig.SSLMode != "" {
+		dbURL += fmt.Sprintf(" sslmode=%s", dbConfig.SSLMode)
+	}
+
 	dbConn := db.NewConnection(ctx, dbURL)
 
 	// Develop環境の時、Firebaseを使わない
