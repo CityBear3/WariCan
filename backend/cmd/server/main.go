@@ -10,8 +10,10 @@ import (
 	"syscall"
 
 	"connectrpc.com/connect"
+	firebase "firebase.google.com/go/v4"
 	"github.com/CityBear3/WariCan/handler/wallet_api"
 	"github.com/CityBear3/WariCan/internal/app_service/wallet_app_service"
+	"github.com/CityBear3/WariCan/internal/infrastructure/config"
 	"github.com/CityBear3/WariCan/internal/infrastructure/connectrpc/interceptor"
 	"github.com/CityBear3/WariCan/internal/infrastructure/db"
 	"github.com/CityBear3/WariCan/internal/infrastructure/wallet_repository"
@@ -22,43 +24,35 @@ import (
 )
 
 func main() {
-	host := os.Getenv("HOST")
-	if host == "" {
-		host = "localhost"
-	}
+	ctx := context.Background()
+	serverConfig := config.NewServerConfig()
+	dbConfig := config.NewDBConfig()
 
-	port := os.Getenv("PORT")
-	if port == "" {
-		port = "8080"
-	}
-
-	interceptors := connect.WithInterceptors(
-		interceptor.NewAppContextInterceptor(),
-		interceptor.NewRequestLogInterceptor(),
-	)
-
-	dbHost := os.Getenv("DB_HOST")
-	if dbHost == "" {
-		dbHost = "localhost"
-	}
-
-	dbPort := os.Getenv("DB_PORT")
-	if dbPort == "" {
-		dbPort = "5432"
-	}
-
-	dbName := os.Getenv("DB_NAME")
-	if dbName != "" {
-		dbName = "warican"
-	}
-
-	dbPassword := os.Getenv("DB_PASSWORD")
-	if dbPassword == "" {
-		panic("DB_PASSWORD is required")
+	if serverConfig.IsDevelopment {
+		log.Println("Development mode")
+	} else {
+		log.Println("Production mode")
 	}
 
 	dbConn := db.NewConnection(
-		fmt.Sprintf("host=%s port=%s user=postgres dbname=%s password=%s sslmode=disable", dbHost, dbPort, dbName, dbPassword),
+		fmt.Sprintf("host=%s port=%s user=postgres dbname=%s user=%s password=%s sslmode=%s",
+			dbConfig.Host, dbConfig.Port, dbConfig.Name, dbConfig.User, dbConfig.Password, dbConfig.SSLMode),
+	)
+
+	app, err := firebase.NewApp(ctx, nil)
+	if err != nil {
+		panic(err)
+	}
+
+	authClient, err := app.Auth(ctx)
+	if err != nil {
+		panic(err)
+	}
+
+	interceptors := connect.WithInterceptors(
+		interceptor.NewAuthenticationInterceptor(authClient, dbConn, serverConfig.IsDevelopment),
+		interceptor.NewAppContextInterceptor(),
+		interceptor.NewRequestLogInterceptor(),
 	)
 
 	walletApplicationService := wallet_app_service.NewService(
@@ -76,13 +70,13 @@ func main() {
 	mux.Handle(walletPath, walletHandler)
 
 	svr := http.Server{
-		Addr: fmt.Sprintf("%s:%s", host, port),
+		Addr: fmt.Sprintf("%s:%s", serverConfig.Host, serverConfig.Port),
 		Handler: cors.AllowAll().Handler(
 			h2c.NewHandler(mux, &http2.Server{}),
 		),
 	}
 
-	log.Println("server start on port")
+	log.Printf("server start on port: %s\n", serverConfig.Port)
 	if err := svr.ListenAndServe(); err != nil {
 		panic(err)
 	}
