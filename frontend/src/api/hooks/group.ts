@@ -27,11 +27,14 @@ export const useCreate = (options?: MutateOptions<{ group: GroupModel }>) => {
   return useMutation(createV1, { onSuccess, onError });
 };
 
-export const useGroup: QueryHook<{
-  group: GroupModel;
-  splitBillings: SplitBillingModel[];
-}> = () => {
-  const { isLoading, isError, data } = useQuery(getV1);
+export const useGroup: QueryHook<
+  { id: string },
+  {
+    group: GroupModel;
+    splitBillings: SplitBillingModel[];
+  }
+> = ({ id }) => {
+  const { isLoading, isError, data } = useQuery(getV1, { groupId: id });
 
   if (isLoading || isError) return { isLoading, isError };
 
