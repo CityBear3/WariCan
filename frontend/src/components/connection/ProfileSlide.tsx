@@ -12,6 +12,7 @@ type Props = {
 
 export const ProfileSlide: React.FC<Props> = ({ focusId, users, ...props }) => {
   const initialIndex = users.findIndex((user) => user.id === focusId);
+  const displayUsers = users.length < 2 ? [...users, ...users] : users;
 
   const settings = {
     initialSlide: focusId && initialIndex >= 0 ? initialIndex : 0,
@@ -38,7 +39,7 @@ export const ProfileSlide: React.FC<Props> = ({ focusId, users, ...props }) => {
       />
 
       <Slider {...settings}>
-        {users.map((user) => (
+        {displayUsers.map((user) => (
           <Box key={user.id}>
             <HStack justifyContent="center" key={user.id}>
               <Profile user={user} />

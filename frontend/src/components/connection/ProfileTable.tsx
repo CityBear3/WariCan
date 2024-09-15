@@ -5,12 +5,21 @@ import { ComponentProps } from "react";
 
 type Props = {
   users: UserModel[];
+  onProfileClick?: (userId: string) => void;
 } & ComponentProps<typeof Grid>;
 
-export const ProfileTable: React.FC<Props> = ({ users, ...props }) => (
+export const ProfileTable: React.FC<Props> = ({
+  users,
+  onProfileClick,
+  ...props
+}) => (
   <Grid templateColumns="repeat(2, 1fr)" gap={6} {...props}>
     {users.map((user) => (
-      <GridItem key={user.id} margin="auto">
+      <GridItem
+        key={user.id}
+        margin="auto"
+        onClick={() => onProfileClick && onProfileClick(user.id)}
+      >
         <ProfileTile user={user} />
       </GridItem>
     ))}
