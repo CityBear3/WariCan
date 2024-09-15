@@ -50,7 +50,6 @@ func (h Handler) DepositV1(ctx context.Context, c *connect.Request[walletApi.Wal
 func (h Handler) GetV1(ctx context.Context, c *connect.Request[emptypb.Empty]) (*connect.Response[walletApi.WalletGetV1_Response], error) {
 	actx, err := app_context.GetAppContext(ctx)
 	if err != nil {
-		//TODO log
 		return nil, connectrpc.CreateErrorResponse(err)
 	}
 
@@ -58,7 +57,6 @@ func (h Handler) GetV1(ctx context.Context, c *connect.Request[emptypb.Empty]) (
 		UserID: actx.UserID,
 	})
 	if err != nil {
-		//TODO log
 		return nil, connectrpc.CreateErrorResponse(err)
 	}
 

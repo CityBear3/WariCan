@@ -6,6 +6,7 @@ import { WalletCard } from "@/components/wallet/WalletCard";
 import { SecondaryButton } from "@/components/button/SecondaryButton";
 import { Section } from "@/components/layout/Section";
 import { SplitBillingRow } from "@/components/splitBilling/SplitBillingRow";
+import { useWallet } from "@/api/hooks/wallet";
 
 const buttonProps = {
   padding: "25px 40px",
@@ -14,10 +15,8 @@ const buttonProps = {
 };
 
 const Wallet: React.FC = () => {
-  const wallet = {
-    balance: 5000,
-    debt: 2000,
-  };
+  const { isLoading, isError, wallet } = useWallet();
+
   const members = [
     {
       id: "sample id 1",
@@ -53,6 +52,13 @@ const Wallet: React.FC = () => {
     },
   ] as const;
 
+  const onDepositClick = () => {};
+
+  const onWithdrawClick = () => {};
+
+  if (isLoading || isError) return <></>;
+  if (!wallet) return <></>;
+
   return (
     <>
       <HeaderSpacer />
@@ -60,8 +66,16 @@ const Wallet: React.FC = () => {
         <WalletCard wallet={wallet} />
       </Box>
       <HStack justifyContent="center" marginBottom="40px">
-        <SecondaryButton label="入金する" {...buttonProps} />
-        <SecondaryButton label="出金する" {...buttonProps} />
+        <SecondaryButton
+          label="入金する"
+          {...buttonProps}
+          onClick={onDepositClick}
+        />
+        <SecondaryButton
+          label="出金する"
+          {...buttonProps}
+          onClick={onWithdrawClick}
+        />
       </HStack>
       <Section title="未精算の割り勘" margin="20px">
         <List>
