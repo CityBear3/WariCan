@@ -5,6 +5,7 @@ package warican.api.group;
 option go_package = "github.com/CityBear3/WariCan/protobuf/group;groupApi";
 
 import "common/user.proto";
+import "common/split-billing.proto";
 
 service Group {
   rpc CreateV1(GroupCreateV1.Request) returns (GroupCreateV1.Response) {}
@@ -39,6 +40,11 @@ message GroupGetV1 {
     string group_id = 1;
     string name = 2;
     string description = 3;
-    repeated common.UserModel members = 4;
+    repeated Member members = 4;
+    repeated common.SplitBillingModel split_billings = 5;
+  }
+
+  message Member {
+    string user_id = 1;
   }
 }
