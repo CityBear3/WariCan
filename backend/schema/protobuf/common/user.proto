@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package common;
+
+option go_package = "github.com/CityBear3/WariCan/protobuf/common;commonModel";
+
+message UserModel {
+  string id = 1;
+  string first_name = 2;
+  string last_name = 3;
+  string email = 4;
+  string tag = 5;
+  string image_url = 6;
+}
+
+
