@@ -4,7 +4,7 @@
 // @ts-nocheck
 
 import type { BinaryReadOptions, FieldList, JsonReadOptions, JsonValue, PartialMessage, PlainMessage } from "@bufbuild/protobuf";
-import { Message, proto3, protoInt64 } from "@bufbuild/protobuf";
+import { Message, proto3 } from "@bufbuild/protobuf";
 
 /**
  * @generated from message common.WalletModel
@@ -60,9 +60,9 @@ export class WalletModel extends Message<WalletModel> {
  */
 export class WalletModel_Balance extends Message<WalletModel_Balance> {
   /**
-   * @generated from field: fixed64 amount = 1;
+   * @generated from field: double amount = 1;
    */
-  amount = protoInt64.zero;
+  amount = 0;
 
   constructor(data?: PartialMessage<WalletModel_Balance>) {
     super();
@@ -72,7 +72,7 @@ export class WalletModel_Balance extends Message<WalletModel_Balance> {
   static readonly runtime: typeof proto3 = proto3;
   static readonly typeName = "common.WalletModel.Balance";
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
-    { no: 1, name: "amount", kind: "scalar", T: 6 /* ScalarType.FIXED64 */ },
+    { no: 1, name: "amount", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): WalletModel_Balance {

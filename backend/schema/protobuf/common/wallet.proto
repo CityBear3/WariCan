@@ -10,7 +10,7 @@ message WalletModel {
   Balance balance = 3;
 
   message Balance {
-    fixed64 amount = 1;
+    double amount = 1;
   }
 }
 

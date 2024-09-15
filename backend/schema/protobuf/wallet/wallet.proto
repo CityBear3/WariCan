@@ -13,7 +13,7 @@ service Wallet {
 
 message WalletDepositV1 {
   message Request {
-    fixed64 amount = 1;
+    double amount = 1;
   }
 
   message Response {

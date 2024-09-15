@@ -4,7 +4,7 @@
 // @ts-nocheck
 
 import type { BinaryReadOptions, FieldList, JsonReadOptions, JsonValue, PartialMessage, PlainMessage } from "@bufbuild/protobuf";
-import { Message, proto3, protoInt64 } from "@bufbuild/protobuf";
+import { Message, proto3 } from "@bufbuild/protobuf";
 import { WalletModel } from "../common/wallet_pb.js";
 
 /**
@@ -43,9 +43,9 @@ export class WalletDepositV1 extends Message<WalletDepositV1> {
  */
 export class WalletDepositV1_Request extends Message<WalletDepositV1_Request> {
   /**
-   * @generated from field: fixed64 amount = 1;
+   * @generated from field: double amount = 1;
    */
-  amount = protoInt64.zero;
+  amount = 0;
 
   constructor(data?: PartialMessage<WalletDepositV1_Request>) {
     super();
@@ -55,7 +55,7 @@ export class WalletDepositV1_Request extends Message<WalletDepositV1_Request> {
   static readonly runtime: typeof proto3 = proto3;
   static readonly typeName = "warican.api.wallet.WalletDepositV1.Request";
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
-    { no: 1, name: "amount", kind: "scalar", T: 6 /* ScalarType.FIXED64 */ },
+    { no: 1, name: "amount", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): WalletDepositV1_Request {
