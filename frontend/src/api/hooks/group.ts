@@ -33,7 +33,7 @@ export const useGroup: QueryHook<
     group: GroupModel;
     splitBillings: SplitBillingModel[];
   }
-> = ({ id }) => {
+> = ({ id }: {id: string}) => {
   const { isLoading, isError, data } = useQuery(getV1, { groupId: id });
 
   if (isLoading || isError) return { isLoading, isError };
