@@ -33,13 +33,21 @@ const ConnectionSlide: React.FC<Props> = ({ params: { id } }) => {
       (keyword) => user.tag.includes(keyword) || user.name.includes(keyword)
     )
   );
-  console.log(filteredUsers);
+
+  const onProfileChange = (idx: number) => {
+    // const user = filteredUsers[idx];
+  };
 
   return (
     <>
       <FormProvider {...methods}>
         <HeaderSpacer />
-        <ProfileSlide users={filteredUsers} focusId={id} margin="40px 0" />
+        <ProfileSlide
+          users={filteredUsers}
+          focusId={id}
+          onProfileChange={onProfileChange}
+          margin="40px 0"
+        />
         <FoldableSection title="メッセージを送る" margin="20px">
           <TextField placeholder="メッセージを入力します" name="message" />
         </FoldableSection>
