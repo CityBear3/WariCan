@@ -1,0 +1,6 @@
+.slick-slide {
+  opacity: 30%;
+}
+.slick-slide.slick-center {
+  opacity: 100%;
+}
