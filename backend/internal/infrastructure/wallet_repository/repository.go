@@ -2,12 +2,13 @@ package wallet_repository
 
 import (
 	"context"
+	"strconv"
+
 	"github.com/CityBear3/WariCan/internal/core/app_context"
 	"github.com/CityBear3/WariCan/internal/domain/transaction"
 	"github.com/CityBear3/WariCan/internal/domain/user"
 	"github.com/CityBear3/WariCan/internal/domain/wallet"
 	"github.com/CityBear3/WariCan/internal/infrastructure/db/dao"
-	"strconv"
 )
 
 func NewUserRepoFunc() wallet.RepoFunc {

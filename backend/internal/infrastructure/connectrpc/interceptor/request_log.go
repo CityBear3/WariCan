@@ -1,9 +1,10 @@
 package interceptor
 
 import (
-	"connectrpc.com/connect"
 	"context"
 	"log"
+
+	"connectrpc.com/connect"
 )
 
 type RequestLogInterceptor struct{}

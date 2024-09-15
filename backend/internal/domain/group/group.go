@@ -1,9 +1,10 @@
 package group
 
 import (
+	"slices"
+
 	"github.com/CityBear3/WariCan/internal/domain/split_billing"
 	"github.com/CityBear3/WariCan/internal/domain/user"
-	"slices"
 )
 
 type Group struct {

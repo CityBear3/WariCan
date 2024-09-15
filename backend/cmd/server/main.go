@@ -1,9 +1,15 @@
 package main
 
 import (
-	"connectrpc.com/connect"
 	"context"
 	"fmt"
+	"log"
+	"net/http"
+	"os"
+	"os/signal"
+	"syscall"
+
+	"connectrpc.com/connect"
 	"github.com/CityBear3/WariCan/handler/wallet_api"
 	"github.com/CityBear3/WariCan/internal/app_service/wallet_app_service"
 	"github.com/CityBear3/WariCan/internal/infrastructure/connectrpc/interceptor"
@@ -13,11 +19,6 @@ import (
 	"github.com/rs/cors"
 	"golang.org/x/net/http2"
 	"golang.org/x/net/http2/h2c"
-	"log"
-	"net/http"
-	"os"
-	"os/signal"
-	"syscall"
 )
 
 func main() {
@@ -35,6 +36,11 @@ func main() {
 		interceptor.NewAppContextInterceptor(),
 		interceptor.NewRequestLogInterceptor(),
 	)
+
+	dbHost := os.Getenv("DB_HOST")
+	if dbHost == "" {
+		panic("127.")
+	}
 
 	dbConn := db.NewConnection("")
 

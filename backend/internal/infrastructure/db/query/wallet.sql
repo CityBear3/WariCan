@@ -13,5 +13,4 @@ WHERE user_id = $1;
 -- :param balance decimal
 UPDATE wallet
 SET balance = $2
-WHERE user_id = $1
-RETURNING *;
+WHERE user_id = $1 RETURNING *;

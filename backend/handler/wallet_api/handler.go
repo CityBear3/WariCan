@@ -1,12 +1,13 @@
 package wallet_api
 
 import (
-	"connectrpc.com/connect"
 	"context"
+
+	"connectrpc.com/connect"
 	"github.com/CityBear3/WariCan/internal/app_service/wallet_app_service"
 	"github.com/CityBear3/WariCan/internal/core/app_context"
 	"github.com/CityBear3/WariCan/internal/infrastructure/connectrpc"
-	common "github.com/CityBear3/WariCan/protobuf/common"
+	commonApiModel "github.com/CityBear3/WariCan/protobuf/common"
 	walletApi "github.com/CityBear3/WariCan/protobuf/wallet"
 	"google.golang.org/protobuf/types/known/emptypb"
 )
@@ -38,8 +39,8 @@ func (h Handler) DepositV1(ctx context.Context, c *connect.Request[walletApi.Wal
 	}
 
 	return connect.NewResponse(&walletApi.WalletDepositV1_Response{
-		Wallet: &common.WalletModel{
-			Balance: &common.WalletModel_Balance{
+		Wallet: &commonApiModel.WalletModel{
+			Balance: &commonApiModel.WalletModel_Balance{
 				Amount: result.Balance().GetAmount(),
 			},
 		},
