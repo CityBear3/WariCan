@@ -2,62 +2,56 @@ package db
 
 import (
 	"context"
-	"database/sql"
 
 	"github.com/CityBear3/WariCan/internal/domain/transaction"
-
-	_ "github.com/lib/pq"
+	"github.com/jackc/pgx/v5"
 )
 
 type Connection struct {
-	conn *sql.DB
+	conn *pgx.Conn
 }
 
-func NewConnection(source string) *Connection {
-	db, err := sql.Open("postgres", source)
+func NewConnection(ctx context.Context, source string) *Connection {
+	conn, err := pgx.Connect(ctx, source)
 	if err != nil {
 		panic(err)
 	}
 
-	return &Connection{conn: db}
+	return &Connection{conn: conn}
 }
 
-func (c Connection) Conn() *sql.DB {
+func (c Connection) Conn() *pgx.Conn {
 	return c.conn
 }
 
 func (c Connection) BeginTransaction(ctx context.Context, f func(ctx context.Context, tx transaction.Transaction) error) error {
-	tx, err := c.conn.BeginTx(ctx, nil)
+	tx, err := c.conn.Begin(ctx)
 	if err != nil {
 		return err
 	}
 
 	if err := f(ctx, tx); err != nil {
-		if rbErr := tx.Rollback(); rbErr != nil {
+		if rbErr := tx.Rollback(ctx); rbErr != nil {
 			return rbErr
 		}
 		return err
 	}
 
-	return tx.Commit()
+	return tx.Commit(ctx)
 }
 
 func (c Connection) BeginROTransaction(ctx context.Context, f func(ctx context.Context, tx transaction.Transaction) error) error {
-	opts := &sql.TxOptions{
-		ReadOnly: true,
-	}
-
-	tx, err := c.conn.BeginTx(ctx, opts)
+	tx, err := c.conn.BeginTx(ctx, pgx.TxOptions{IsoLevel: pgx.RepeatableRead})
 	if err != nil {
 		return err
 	}
 
 	if err := f(ctx, tx); err != nil {
-		if rbErr := tx.Rollback(); rbErr != nil {
+		if rbErr := tx.Rollback(ctx); rbErr != nil {
 			return rbErr
 		}
 		return err
 	}
 
-	return tx.Commit()
+	return tx.Commit(ctx)
 }

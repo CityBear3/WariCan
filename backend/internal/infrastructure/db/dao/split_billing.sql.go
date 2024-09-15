@@ -7,9 +7,9 @@ package dao
 
 import (
 	"context"
-	"time"
 
-	"github.com/google/uuid"
+	uuid "github.com/google/uuid"
+	"github.com/jackc/pgx/v5/pgtype"
 )
 
 const getSplitBillingByGroupID = `-- name: GetSplitBillingByGroupID :many
@@ -24,21 +24,21 @@ WHERE sb.group_id = $1
 `
 
 type GetSplitBillingByGroupIDRow struct {
-	ID               uuid.UUID `json:"id"`
-	GroupID          uuid.UUID `json:"group_id"`
-	Name             string    `json:"name"`
-	Amount           int32     `json:"amount"`
-	AdvancePayerID   uuid.UUID `json:"advance_payer_id"`
-	SplitBillingType string    `json:"split_billing_type"`
-	CreatedAt        time.Time `json:"created_at"`
-	UpdatedAt        time.Time `json:"updated_at"`
-	Status           string    `json:"status"`
-	SplitBillingID   uuid.UUID `json:"split_billing_id"`
+	ID               uuid.UUID          `json:"id"`
+	GroupID          uuid.UUID          `json:"group_id"`
+	Name             string             `json:"name"`
+	Amount           int32              `json:"amount"`
+	AdvancePayerID   uuid.UUID          `json:"advance_payer_id"`
+	SplitBillingType string             `json:"split_billing_type"`
+	CreatedAt        pgtype.Timestamptz `json:"created_at"`
+	UpdatedAt        pgtype.Timestamptz `json:"updated_at"`
+	Status           string             `json:"status"`
+	SplitBillingID   uuid.UUID          `json:"split_billing_id"`
 }
 
 // :param groupID uuid
 func (q *Queries) GetSplitBillingByGroupID(ctx context.Context, groupID uuid.UUID) ([]GetSplitBillingByGroupIDRow, error) {
-	rows, err := q.db.QueryContext(ctx, getSplitBillingByGroupID, groupID)
+	rows, err := q.db.Query(ctx, getSplitBillingByGroupID, groupID)
 	if err != nil {
 		return nil, err
 	}
@@ -61,9 +61,6 @@ func (q *Queries) GetSplitBillingByGroupID(ctx context.Context, groupID uuid.UUI
 			return nil, err
 		}
 		items = append(items, i)
-	}
-	if err := rows.Close(); err != nil {
-		return nil, err
 	}
 	if err := rows.Err(); err != nil {
 		return nil, err
