@@ -37,7 +37,29 @@ func main() {
 		interceptor.NewRequestLogInterceptor(),
 	)
 
-	dbConn := db.NewConnection("")
+	dbHost := os.Getenv("DB_HOST")
+	if dbHost == "" {
+		dbHost = "localhost"
+	}
+
+	dbPort := os.Getenv("DB_PORT")
+	if dbPort == "" {
+		dbPort = "5432"
+	}
+
+	dbName := os.Getenv("DB_NAME")
+	if dbName != "" {
+		dbName = "warican"
+	}
+
+	dbPassword := os.Getenv("DB_PASSWORD")
+	if dbPassword == "" {
+		panic("DB_PASSWORD is required")
+	}
+
+	dbConn := db.NewConnection(
+		fmt.Sprintf("host=%s port=%s user=postgres dbname=%s password=%s sslmode=disable", dbHost, dbPort, dbName, dbPassword),
+	)
 
 	walletApplicationService := wallet_app_service.NewService(
 		dbConn,
