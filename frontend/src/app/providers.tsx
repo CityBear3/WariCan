@@ -11,16 +11,26 @@ const finalTransport = createConnectTransport({
   baseUrl: "http://localhost:8080",
   interceptors: [
     (next) => (request) => {
+      request.header.append("X-Idempotency-Key", uuidV4());
       request.header.append(
-        "X-Idempotency-Key", uuidV4()
+        "X-Development-User",
+        "CF290BEE-9EB4-4E28-BEA9-C8C3B37CB621"
       );
-      request.header.append("X-Development-User", "CF290BEE-9EB4-4E28-BEA9-C8C3B37CB621");
       return next(request);
     },
   ],
 });
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: 0, // リトライを無効にする
+    },
+    mutations: {
+      retry: 0, // リトライを無効にする
+    },
+  },
+});
 
 export function Providers({ children }: { children: React.ReactNode }) {
   return (
