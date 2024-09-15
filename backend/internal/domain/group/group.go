@@ -3,25 +3,22 @@ package group
 import (
 	"slices"
 
-	"github.com/CityBear3/WariCan/internal/domain/split_billing"
 	"github.com/CityBear3/WariCan/internal/domain/user"
 )
 
 type Group struct {
-	id            ID
-	name          Name
-	description   *Description
-	members       []user.ID
-	splitBillings []split_billing.SplitBilling
+	id          ID
+	name        Name
+	description *Description
+	members     []user.ID
 }
 
-func Of(id ID, name Name, description *Description, members []user.ID, splitBillings []split_billing.SplitBilling) *Group {
+func Of(id ID, name Name, description *Description, members []user.ID) *Group {
 	return &Group{
-		id:            id,
-		name:          name,
-		description:   description,
-		members:       members,
-		splitBillings: splitBillings,
+		id:          id,
+		name:        name,
+		description: description,
+		members:     members,
 	}
 }
 
@@ -31,7 +28,7 @@ func (g *Group) AddMember(userID user.ID) *Group {
 		newMembers = append(g.members, userID)
 	}
 
-	return Of(g.id, g.name, g.description, newMembers, g.splitBillings)
+	return Of(g.id, g.name, g.description, newMembers)
 }
 
 func (g *Group) Id() ID {
@@ -48,8 +45,4 @@ func (g *Group) Description() *Description {
 
 func (g *Group) Members() []user.ID {
 	return g.members
-}
-
-func (g *Group) SplitBillings() []split_billing.SplitBilling {
-	return g.splitBillings
 }

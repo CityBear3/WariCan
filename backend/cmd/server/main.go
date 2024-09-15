@@ -37,11 +37,6 @@ func main() {
 		interceptor.NewRequestLogInterceptor(),
 	)
 
-	dbHost := os.Getenv("DB_HOST")
-	if dbHost == "" {
-		panic("127.")
-	}
-
 	dbConn := db.NewConnection("")
 
 	walletApplicationService := wallet_app_service.NewService(
