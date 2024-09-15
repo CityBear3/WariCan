@@ -29,25 +29,6 @@ jobs:
         run: docker build -t ${{ secrets.REGION }}-docker.pkg.dev/${{ secrets.GOOGLE_PROJECT_ID }}/${{ secrets.ARTIFACT_REGISTRY_REPOSITORY }}/warican-api:${{ github.sha }} ./backend
       - name: 'Push Docker Image (api)'
         run: docker push ${{ secrets.REGION }}-docker.pkg.dev/${{ secrets.GOOGLE_PROJECT_ID }}/${{ secrets.ARTIFACT_REGISTRY_REPOSITORY }}/warican-api:${{ github.sha }}
-      - name: 'Build Docker Image (ui)'
-        run: docker build -t ${{ secrets.REGION }}-docker.pkg.dev/${{ secrets.GOOGLE_PROJECT_ID }}/${{ secrets.ARTIFACT_REGISTRY_REPOSITORY }}/warican-ui:${{ github.sha }} ./frontend
-      - name: 'Push Docker Image (ui)'
-        run: docker push ${{ secrets.REGION }}-docker.pkg.dev/${{ secrets.GOOGLE_PROJECT_ID }}/${{ secrets.ARTIFACT_REGISTRY_REPOSITORY }}/warican-ui:${{ github.sha }}
-      - name: 'Deploy to Cloud Run (ui)'
-        run: >
-          gcloud beta run deploy warican-ui 
-          --image ${{ secrets.REGION }}-docker.pkg.dev/${{ secrets.GOOGLE_PROJECT_ID }}/${{ secrets.ARTIFACT_REGISTRY_REPOSITORY }}/warican-ui:${{ github.sha }}
-          --region ${{ secrets.REGION }}
-          --service-account ${{ secrets.RUN_UI_SERVICE_ACCOUNT }}
-          --platform managed --region ${{ secrets.REGION }}
-          --allow-unauthenticated
-          --service-min-instances 0
-          --max-instances 2
-          --memory 512Mi
-          --cpu 1
-          --port 3000
-          --update-secrets NEXT_PUBLIC_DEVELOPMENT_USER=DEV_USER:latest
-          --revision-suffix ${{ github.sha }}
       - name: 'Deploy to Cloud Run (api)'
         run: >
           gcloud beta run deploy warican-api
@@ -65,3 +46,22 @@ jobs:
           --update-env-vars DB_HOST=${{ secrets.DB_HOST }}
           --update-secrets DB_USER=DB_USER:latest,DB_PASSWORD=DB_PASSWORD:latest
           --revision-suffix ${{ github.sha }}
+#      - name: 'Build Docker Image (ui)'
+#        run: docker build -t ${{ secrets.REGION }}-docker.pkg.dev/${{ secrets.GOOGLE_PROJECT_ID }}/${{ secrets.ARTIFACT_REGISTRY_REPOSITORY }}/warican-ui:${{ github.sha }} ./frontend
+#      - name: 'Push Docker Image (ui)'
+#        run: docker push ${{ secrets.REGION }}-docker.pkg.dev/${{ secrets.GOOGLE_PROJECT_ID }}/${{ secrets.ARTIFACT_REGISTRY_REPOSITORY }}/warican-ui:${{ github.sha }}
+#      - name: 'Deploy to Cloud Run (ui)'
+#        run: >
+#          gcloud beta run deploy warican-ui
+#          --image ${{ secrets.REGION }}-docker.pkg.dev/${{ secrets.GOOGLE_PROJECT_ID }}/${{ secrets.ARTIFACT_REGISTRY_REPOSITORY }}/warican-ui:${{ github.sha }}
+#          --region ${{ secrets.REGION }}
+#          --service-account ${{ secrets.RUN_UI_SERVICE_ACCOUNT }}
+#          --platform managed --region ${{ secrets.REGION }}
+#          --allow-unauthenticated
+#          --service-min-instances 0
+#          --max-instances 2
+#          --memory 512Mi
+#          --cpu 1
+#          --port 3000
+#          --update-secrets NEXT_PUBLIC_DEVELOPMENT_USER=DEV_USER:latest
+#          --revision-suffix ${{ github.sha }}
