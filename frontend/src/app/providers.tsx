@@ -14,6 +14,7 @@ const finalTransport = createConnectTransport({
       request.header.append(
         "X-Idempotency-Key", uuidV4()
       );
+      request.header.append("X-Development-User", "07D45731-9E1D-4023-A439-0D5977190BD8");
       return next(request);
     },
   ],
