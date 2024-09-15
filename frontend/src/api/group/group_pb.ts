@@ -6,6 +6,7 @@
 import type { BinaryReadOptions, FieldList, JsonReadOptions, JsonValue, PartialMessage, PlainMessage } from "@bufbuild/protobuf";
 import { Message, proto3 } from "@bufbuild/protobuf";
 import { UserModel } from "../common/user_pb.js";
+import { SplitBillingModel } from "../common/split-billing_pb.js";
 
 /**
  * @generated from message warican.api.group.GroupCreateV1
@@ -267,9 +268,14 @@ export class GroupGetV1_Response extends Message<GroupGetV1_Response> {
   description = "";
 
   /**
-   * @generated from field: repeated common.UserModel members = 4;
+   * @generated from field: repeated warican.api.group.GroupGetV1.Member members = 4;
    */
-  members: UserModel[] = [];
+  members: GroupGetV1_Member[] = [];
+
+  /**
+   * @generated from field: repeated common.SplitBillingModel split_billings = 5;
+   */
+  splitBillings: SplitBillingModel[] = [];
 
   constructor(data?: PartialMessage<GroupGetV1_Response>) {
     super();
@@ -282,7 +288,8 @@ export class GroupGetV1_Response extends Message<GroupGetV1_Response> {
     { no: 1, name: "group_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 2, name: "name", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 3, name: "description", kind: "scalar", T: 9 /* ScalarType.STRING */ },
-    { no: 4, name: "members", kind: "message", T: UserModel, repeated: true },
+    { no: 4, name: "members", kind: "message", T: GroupGetV1_Member, repeated: true },
+    { no: 5, name: "split_billings", kind: "message", T: SplitBillingModel, repeated: true },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): GroupGetV1_Response {
@@ -299,6 +306,43 @@ export class GroupGetV1_Response extends Message<GroupGetV1_Response> {
 
   static equals(a: GroupGetV1_Response | PlainMessage<GroupGetV1_Response> | undefined, b: GroupGetV1_Response | PlainMessage<GroupGetV1_Response> | undefined): boolean {
     return proto3.util.equals(GroupGetV1_Response, a, b);
+  }
+}
+
+/**
+ * @generated from message warican.api.group.GroupGetV1.Member
+ */
+export class GroupGetV1_Member extends Message<GroupGetV1_Member> {
+  /**
+   * @generated from field: string user_id = 1;
+   */
+  userId = "";
+
+  constructor(data?: PartialMessage<GroupGetV1_Member>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "warican.api.group.GroupGetV1.Member";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "user_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): GroupGetV1_Member {
+    return new GroupGetV1_Member().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): GroupGetV1_Member {
+    return new GroupGetV1_Member().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): GroupGetV1_Member {
+    return new GroupGetV1_Member().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: GroupGetV1_Member | PlainMessage<GroupGetV1_Member> | undefined, b: GroupGetV1_Member | PlainMessage<GroupGetV1_Member> | undefined): boolean {
+    return proto3.util.equals(GroupGetV1_Member, a, b);
   }
 }
 
