@@ -14,9 +14,8 @@ import (
 func NewUserRepoFunc() wallet.RepoFunc {
 	return wallet.RepoFunc{
 		New: func(ctx context.Context, actx app_context.AppContext, tx transaction.Transaction) wallet.Repository {
-			queries := dao.Queries{}
 			return Repository{
-				queries: queries.WithTx(tx),
+				queries: dao.New(tx),
 			}
 		},
 	}
@@ -27,8 +26,8 @@ type Repository struct {
 }
 
 func (r Repository) GetByUserID(ctx context.Context, actx app_context.AppContext, userID user.ID) (*wallet.Wallet, error) {
-	result, err := r.queries.GetWalletByUserID(ctx, userID.UUID()); 
-	if( err!= nil) {
+	result, err := r.queries.GetWalletByUserID(ctx, userID.UUID())
+	if err != nil {
 		return nil, err
 	}
 

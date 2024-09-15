@@ -5,7 +5,6 @@
 
 import type { BinaryReadOptions, FieldList, JsonReadOptions, JsonValue, PartialMessage, PlainMessage } from "@bufbuild/protobuf";
 import { Message, proto3 } from "@bufbuild/protobuf";
-import { UserModel } from "../common/user_pb.js";
 import { SplitBillingModel } from "../common/split-billing_pb.js";
 
 /**
@@ -108,9 +107,14 @@ export class GroupCreateV1_Response extends Message<GroupCreateV1_Response> {
   description = "";
 
   /**
-   * @generated from field: repeated common.UserModel members = 4;
+   * @generated from field: string owner_id = 4;
    */
-  members: UserModel[] = [];
+  ownerId = "";
+
+  /**
+   * @generated from field: repeated warican.api.group.GroupCreateV1.Member members = 5;
+   */
+  members: GroupCreateV1_Member[] = [];
 
   constructor(data?: PartialMessage<GroupCreateV1_Response>) {
     super();
@@ -123,7 +127,8 @@ export class GroupCreateV1_Response extends Message<GroupCreateV1_Response> {
     { no: 1, name: "group_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 2, name: "name", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 3, name: "description", kind: "scalar", T: 9 /* ScalarType.STRING */ },
-    { no: 4, name: "members", kind: "message", T: UserModel, repeated: true },
+    { no: 4, name: "owner_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 5, name: "members", kind: "message", T: GroupCreateV1_Member, repeated: true },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): GroupCreateV1_Response {
@@ -268,12 +273,17 @@ export class GroupGetV1_Response extends Message<GroupGetV1_Response> {
   description = "";
 
   /**
-   * @generated from field: repeated warican.api.group.GroupGetV1.Member members = 4;
+   * @generated from field: string owner_id = 4;
+   */
+  ownerId = "";
+
+  /**
+   * @generated from field: repeated warican.api.group.GroupGetV1.Member members = 5;
    */
   members: GroupGetV1_Member[] = [];
 
   /**
-   * @generated from field: repeated common.SplitBillingModel split_billings = 5;
+   * @generated from field: repeated common.SplitBillingModel split_billings = 6;
    */
   splitBillings: SplitBillingModel[] = [];
 
@@ -288,8 +298,9 @@ export class GroupGetV1_Response extends Message<GroupGetV1_Response> {
     { no: 1, name: "group_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 2, name: "name", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 3, name: "description", kind: "scalar", T: 9 /* ScalarType.STRING */ },
-    { no: 4, name: "members", kind: "message", T: GroupGetV1_Member, repeated: true },
-    { no: 5, name: "split_billings", kind: "message", T: SplitBillingModel, repeated: true },
+    { no: 4, name: "owner_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 5, name: "members", kind: "message", T: GroupGetV1_Member, repeated: true },
+    { no: 6, name: "split_billings", kind: "message", T: SplitBillingModel, repeated: true },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): GroupGetV1_Response {

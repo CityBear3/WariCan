@@ -23,7 +23,8 @@ message GroupCreateV1 {
     string group_id = 1;
     string name = 2;
     string description = 3;
-    repeated common.UserModel members = 4;
+    string owner_id = 4;
+    repeated Member members = 5;
   }
 
   message Member {
@@ -40,8 +41,9 @@ message GroupGetV1 {
     string group_id = 1;
     string name = 2;
     string description = 3;
-    repeated Member members = 4;
-    repeated common.SplitBillingModel split_billings = 5;
+    string owner_id = 4;
+    repeated Member members = 5;
+    repeated common.SplitBillingModel split_billings = 6;
   }
 
   message Member {

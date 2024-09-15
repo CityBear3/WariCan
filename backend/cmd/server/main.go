@@ -12,12 +12,16 @@ import (
 	"connectrpc.com/connect"
 	firebase "firebase.google.com/go/v4"
 	"firebase.google.com/go/v4/auth"
+	"github.com/CityBear3/WariCan/handler/group_api"
 	"github.com/CityBear3/WariCan/handler/wallet_api"
+	"github.com/CityBear3/WariCan/internal/app_service/group_app_service"
 	"github.com/CityBear3/WariCan/internal/app_service/wallet_app_service"
 	"github.com/CityBear3/WariCan/internal/infrastructure/config"
 	"github.com/CityBear3/WariCan/internal/infrastructure/connectrpc/interceptor"
 	"github.com/CityBear3/WariCan/internal/infrastructure/db"
+	"github.com/CityBear3/WariCan/internal/infrastructure/group_repository"
 	"github.com/CityBear3/WariCan/internal/infrastructure/wallet_repository"
+	"github.com/CityBear3/WariCan/protobuf/group/groupApiconnect"
 	"github.com/CityBear3/WariCan/protobuf/wallet/walletApiconnect"
 	"github.com/rs/cors"
 	"golang.org/x/net/http2"
@@ -41,7 +45,7 @@ func main() {
 	)
 
 	// Develop環境の時、Firebaseを使わない
-	var authClient *auth.Client = nil;
+	var authClient *auth.Client = nil
 	if !serverConfig.IsDevelopment {
 		app, err := firebase.NewApp(ctx, nil)
 		if err != nil {
@@ -67,14 +71,25 @@ func main() {
 		wallet_repository.NewUserRepoFunc(),
 	)
 
+	groupApplicationService := group_app_service.NewService(
+		dbConn,
+		group_repository.NewGroupRepository(),
+	)
+
 	walletPath, walletHandler := walletApiconnect.NewWalletHandler(
 		wallet_api.NewHandler(walletApplicationService),
+		interceptors,
+	)
+
+	groupPath, groupHandler := groupApiconnect.NewGroupHandler(
+		group_api.NewHandler(dbConn, groupApplicationService),
 		interceptors,
 	)
 
 	mux := http.NewServeMux()
 
 	mux.Handle(walletPath, walletHandler)
+	mux.Handle(groupPath, groupHandler)
 
 	svr := http.Server{
 		Addr: fmt.Sprintf("%s:%s", serverConfig.Host, serverConfig.Port),
