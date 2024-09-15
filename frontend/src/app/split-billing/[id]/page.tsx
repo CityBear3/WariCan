@@ -1,3 +1,5 @@
+"use client";
+
 import { HeaderSpacer } from "@/app/header";
 import { DisabledButton } from "@/components/button/DisabledButton";
 import { PrimaryButton } from "@/components/button/PrimaryButton";
@@ -8,6 +10,8 @@ import { UserList } from "@/components/user/UserList";
 import { SplitBillingModel } from "@/domain/splitBilling";
 import { UserModel } from "@/domain/user";
 import { Box, Heading, HStack, VStack } from "@chakra-ui/react";
+import { useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
 
 type Props = {
   params: {
@@ -31,15 +35,26 @@ const SplitBilling: React.FC<Props> = ({ params: { id } }) => {
     },
   ];
 
-  const splitBilling: SplitBillingModel = {
+  const searchParams = useSearchParams();
+  const groupId = searchParams.get("groupId");
+  const description = searchParams.get("description");
+  const amount = searchParams.get("amount");
+
+  const [splitBilling, setSplitBilling] = useState<SplitBillingModel>({
     id,
-    name: "二次会 @居酒屋まっさん",
-    amount: 50000,
-    advancePayer: members[0],
+    groupId: groupId ?? "",
+    name: description ?? "",
+    amount: Number(amount),
     members,
+    advancePayer: members[0],
     type: "EQUAL_SPLIT",
     status: "ACTIVE",
-  };
+  });
+
+  const [paidAmount, setPaidAmount] = useState<number>(0);
+  useEffect(() => {
+    setTimeout(() => setPaidAmount(splitBilling.amount), 2000);
+  }, []);
 
   return (
     <>
@@ -49,14 +64,21 @@ const SplitBilling: React.FC<Props> = ({ params: { id } }) => {
       </Box>
       <HStack justifyContent="space-between" margin="20px 40px">
         <Heading size="lg">未精算分</Heading>
-        <MoneyText amount={5000} fontSize="24px" />
+        <MoneyText amount={splitBilling.amount - paidAmount} fontSize="24px" />
       </HStack>
       <FoldableSection title="精算状況" margin="20px">
-        <UserList users={splitBilling.members} />
+        <UserList users={members} />
       </FoldableSection>
       <VStack width="100%" alignItems="center" marginTop="10px">
         {splitBilling.status === "ACTIVE" && (
-          <PrimaryButton label="完了する" fontSize="20px" padding="25px 30px" />
+          <PrimaryButton
+            label="完了する"
+            fontSize="20px"
+            padding="25px 30px"
+            onClick={() =>
+              setSplitBilling({ ...splitBilling, status: "CLOSED" })
+            }
+          />
         )}
         {splitBilling.status === "CLOSED" && (
           <DisabledButton

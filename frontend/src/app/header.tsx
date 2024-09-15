@@ -4,6 +4,7 @@ import { Logo } from "@/components/text/Logo";
 import { UserImageButton } from "@/components/user/UserImageButton";
 import { UserModel } from "@/domain/user";
 import { Box, HStack } from "@chakra-ui/react";
+import { usePathname, useRouter } from "next/navigation";
 
 type Props = {
   user: UserModel;
@@ -29,13 +30,31 @@ const logoProps = {
   color: "white",
 };
 
-export const Header: React.FC<Props> = ({ user, onProfileOpen, ...props }) => (
-  <Box {...headerProps} {...props}>
-    <HStack height="50px" alignContent="center" justifyContent="space-between">
-      <Logo {...logoProps} />
-      <UserImageButton user={user} onClick={onProfileOpen} />
-    </HStack>
-  </Box>
-);
+export const Header: React.FC<Props> = ({ user, onProfileOpen, ...props }) => {
+  const router = useRouter();
+
+  const onHomeClick = () => {
+    router.push("/");
+  };
+
+  const isAuth = !usePathname().includes("login");
+
+  return (
+    <Box {...headerProps} {...props}>
+      <HStack
+        height="50px"
+        alignContent="center"
+        justifyContent="space-between"
+      >
+        <Logo {...logoProps} onClick={onHomeClick} />
+        {isAuth ? (
+          <UserImageButton user={user} onClick={onProfileOpen} />
+        ) : (
+          <></>
+        )}
+      </HStack>
+    </Box>
+  );
+};
 
 export const HeaderSpacer: React.FC = () => <Box {...headerSpacerProps}></Box>;

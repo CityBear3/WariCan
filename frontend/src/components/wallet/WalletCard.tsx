@@ -16,6 +16,7 @@ import { WalletModel } from "@/domain/wallet";
 
 type Props = {
   wallet: WalletModel;
+  fullSize?: boolean;
 };
 
 const tableProps = {
@@ -37,17 +38,19 @@ const thProps = {
   style: { font: "inherit", color: "inherit", fontSize: "20px" },
 } as const;
 
-export const WalletCard: React.FC<Props> = ({ wallet }) => (
+export const WalletCard: React.FC<Props> = ({ wallet, fullSize = true }) => (
   <PrimaryCard>
     <Stack
       divider={<StackDivider />}
       spacing="4"
       margin="10px 20px"
-      marginBottom="25px"
+      marginBottom={fullSize ? "25px" : "10px"}
     >
-      <CardHeader padding="0" marginTop="20px">
-        <Heading>Wallet</Heading>
-      </CardHeader>
+      {fullSize && (
+        <CardHeader padding="0" marginTop="20px">
+          <Heading>Wallet</Heading>
+        </CardHeader>
+      )}
       <CardBody padding="0 10px">
         <Table>
           <Tbody>
@@ -57,12 +60,14 @@ export const WalletCard: React.FC<Props> = ({ wallet }) => (
                 <MoneyText amount={wallet.balance} />
               </Td>
             </Tr>
-            <Tr>
-              <Th {...thProps}>未精算分</Th>
-              <Td {...tdProps}>
-                <MoneyText amount={wallet.debt} />
-              </Td>
-            </Tr>
+            {fullSize && (
+              <Tr>
+                <Th {...thProps}>未精算分</Th>
+                <Td {...tdProps}>
+                  <MoneyText amount={wallet.debt} />
+                </Td>
+              </Tr>
+            )}
           </Tbody>
         </Table>
       </CardBody>

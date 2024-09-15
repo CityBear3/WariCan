@@ -1,10 +1,15 @@
+"use client";
+
 import { HeaderSpacer } from "@/app/header";
+import { splitBillingPath } from "@/app/path";
 import { PrimaryButton } from "@/components/button/PrimaryButton";
 import { FoldableSection } from "@/components/layout/FoldableSection";
 import { Section } from "@/components/layout/Section";
 import { SplitBillingForm } from "@/components/splitBilling/SplitBillingForm";
 import { UserList } from "@/components/user/UserList";
 import { HStack } from "@chakra-ui/react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { FormProvider, useForm } from "react-hook-form";
 
 export const CreateSplitBilling: React.FC = () => {
   const user = {
@@ -29,8 +34,24 @@ export const CreateSplitBilling: React.FC = () => {
     },
   ];
 
+  const router = useRouter();
+
+  const searchParams = useSearchParams();
+  const groupId = searchParams.get("groupId") ?? "";
+
+  type FormValues = {
+    description: string;
+    amount: number;
+  };
+
+  const methods = useForm<FormValues>();
+
+  const onSubmit = (values: FormValues) => {
+    router.push(splitBillingPath(groupId, values));
+  };
+
   return (
-    <>
+    <FormProvider {...methods}>
       <HeaderSpacer />
       <Section title="割り勘を作成する" margin="20px">
         <SplitBillingForm advancePayer={user} members={members} />
@@ -39,9 +60,14 @@ export const CreateSplitBilling: React.FC = () => {
         <UserList users={members} />
       </FoldableSection>
       <HStack width="100%" justifyContent="center" marginTop="10px">
-        <PrimaryButton label="作成する" fontSize="20px" padding="25px 80px" />
+        <PrimaryButton
+          label="作成する"
+          onClick={methods.handleSubmit(onSubmit)}
+          fontSize="20px"
+          padding="25px 80px"
+        />
       </HStack>
-    </>
+    </FormProvider>
   );
 };
 

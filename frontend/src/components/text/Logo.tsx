@@ -10,6 +10,6 @@ type Props = ComponentProps<typeof Text>;
 
 export const Logo: React.FC<Props> = ({ ...props }) => (
   <Text {...logoProps} {...props}>
-    WARICAN
+    WariCan
   </Text>
 );
