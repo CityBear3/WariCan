@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package warican.api.connection;
+
+option go_package = "github.com/CityBear3/WariCan/protobuf/connection;connectionApi";
+
+import "google/protobuf/empty.proto";
+import "common/user.proto";
+
+service Connection {
+  rpc GetV1(google.protobuf.Empty) returns (ConnectionGetV1.Response){}
+}
+
+message ConnectionGetV1 {
+  message Response {
+    repeated common.UserModel connected_users = 1;
+  }
+}
+
