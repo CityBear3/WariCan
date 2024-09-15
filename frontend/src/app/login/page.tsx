@@ -4,6 +4,7 @@ import { PrimaryButton } from "@/components/button/PrimaryButton";
 import { TextField } from "@/components/input/TextField";
 import { Section } from "@/components/layout/Section";
 import { VStack } from "@chakra-ui/react";
+import { useRouter } from "next/navigation";
 import { FormProvider, useForm } from "react-hook-form";
 
 const sectionProps = {
@@ -28,10 +29,12 @@ type FormValues = {
 };
 
 const Login: React.FC = () => {
+  const router = useRouter();
+
   const methods = useForm<FormValues>();
 
   const onSubmit = (values: FormValues) => {
-    alert([values.email, values.password]);
+    router.push("/");
   };
 
   return (
@@ -42,12 +45,14 @@ const Login: React.FC = () => {
             placeholder="メールアドレスを入力します"
             name="email"
             type="email"
+            options={{ required: true }}
             {...textFieldProps}
           />
           <TextField
             placeholder="パスワードを入力します"
             name="password"
             type="password"
+            options={{ required: true }}
             {...textFieldProps}
           />
           <PrimaryButton

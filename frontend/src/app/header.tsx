@@ -4,7 +4,7 @@ import { Logo } from "@/components/text/Logo";
 import { UserImageButton } from "@/components/user/UserImageButton";
 import { UserModel } from "@/domain/user";
 import { Box, HStack } from "@chakra-ui/react";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 type Props = {
   user: UserModel;
@@ -37,6 +37,8 @@ export const Header: React.FC<Props> = ({ user, onProfileOpen, ...props }) => {
     router.push("/");
   };
 
+  const isAuth = !usePathname().includes("login");
+
   return (
     <Box {...headerProps} {...props}>
       <HStack
@@ -45,7 +47,11 @@ export const Header: React.FC<Props> = ({ user, onProfileOpen, ...props }) => {
         justifyContent="space-between"
       >
         <Logo {...logoProps} onClick={onHomeClick} />
-        <UserImageButton user={user} onClick={onProfileOpen} />
+        {isAuth ? (
+          <UserImageButton user={user} onClick={onProfileOpen} />
+        ) : (
+          <></>
+        )}
       </HStack>
     </Box>
   );
