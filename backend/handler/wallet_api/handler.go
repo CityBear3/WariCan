@@ -2,6 +2,7 @@ package wallet_api
 
 import (
 	"context"
+	"log"
 
 	"connectrpc.com/connect"
 	"github.com/CityBear3/WariCan/internal/app_service/wallet_app_service"
@@ -25,7 +26,7 @@ func NewHandler(walletAppService *wallet_app_service.Service) *Handler {
 func (h Handler) DepositV1(ctx context.Context, c *connect.Request[walletApi.WalletDepositV1_Request]) (*connect.Response[walletApi.WalletDepositV1_Response], error) {
 	actx, err := app_context.GetAppContext(ctx)
 	if err != nil {
-		//TODO log
+		log.Panicf("failed to get app context: %v\n", err)
 		return nil, connectrpc.CreateErrorResponse(err)
 	}
 
@@ -34,7 +35,7 @@ func (h Handler) DepositV1(ctx context.Context, c *connect.Request[walletApi.Wal
 		Amount: c.Msg.Amount,
 	})
 	if err != nil {
-		//TODO log
+		log.Println("failed to deposit: ", err)
 		return nil, connectrpc.CreateErrorResponse(err)
 	}
 
