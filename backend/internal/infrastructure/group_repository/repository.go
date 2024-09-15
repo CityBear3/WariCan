@@ -35,5 +35,25 @@ func (r Repository) Create(ctx context.Context, actx app_context.AppContext, cre
 		},
 	}
 
-	return r.queries.CreateGroup(ctx, params)
+	if err := r.queries.CreateGroup(ctx, params); err != nil {
+		return err
+	}
+
+	var memberParams []dao.CreateGroupMemberParams
+	for _, member := range creatingGroup.Members() {
+		memberParams = append(memberParams, dao.CreateGroupMemberParams{
+			ID:      creatingGroup.Id().UUID(),
+			GroupID: creatingGroup.Id().UUID(),
+			UserID:  member.UUID(),
+			CreatedAt: pgtype.Timestamptz{
+				Time: actx.CurrentTime,
+			},
+		})
+	}
+
+	if _, err := r.queries.CreateGroupMember(ctx, memberParams); err != nil {
+		return err
+	}
+
+	return nil
 }

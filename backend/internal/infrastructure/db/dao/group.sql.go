@@ -36,6 +36,13 @@ func (q *Queries) CreateGroup(ctx context.Context, arg CreateGroupParams) error 
 	return err
 }
 
+type CreateGroupMemberParams struct {
+	ID        uuid.UUID          `json:"id"`
+	GroupID   uuid.UUID          `json:"group_id"`
+	UserID    uuid.UUID          `json:"user_id"`
+	CreatedAt pgtype.Timestamptz `json:"created_at"`
+}
+
 const getGroupByID = `-- name: GetGroupByID :many
 SELECT DISTINCT g.id,
                 g.name,
