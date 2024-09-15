@@ -7,15 +7,9 @@ option go_package = "github.com/CityBear3/WariCan/protobuf/common;commonModel";
 message SplitBillingModel {
   string id = 1;
   string name = 2;
-  string description = 3;
-  string group_id = 4;
-  int64 amount = 5;
-  string advance_payer_id = 6;
-  string split_billing_type = 7;
-  repeated Member members = 8;
-  string status = 9;
-
-  message Member {
-    string user_id = 1;
-  }
+  string group_id = 3;
+  int64 amount = 4;
+  string advance_payer_id = 5;
+  string split_billing_type = 6;
+  string status = 7;
 }

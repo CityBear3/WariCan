@@ -15,3 +15,7 @@ func NewDescription(description string) (Description, error) {
 
 	return Description(description), nil
 }
+
+func (d Description) String() string {
+	return string(d)
+}

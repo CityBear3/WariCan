@@ -11,3 +11,7 @@ func NewUserID(id uuid.UUID) ID {
 func (id ID) UUID() uuid.UUID {
 	return uuid.UUID(id)
 }
+
+func (id ID) String() string {
+	return uuid.UUID(id).String()
+}

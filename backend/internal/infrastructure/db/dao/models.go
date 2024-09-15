@@ -16,8 +16,18 @@ type Group struct {
 	ID          uuid.UUID `json:"id"`
 	Name        string    `json:"name"`
 	Description string    `json:"description"`
+	OwnerID     uuid.UUID `json:"owner_id"`
 	CreatedAt   time.Time `json:"created_at"`
 	UpdatedAt   time.Time `json:"updated_at"`
+}
+
+// group_member
+type GroupMember struct {
+	ID        uuid.UUID `json:"id"`
+	GroupID   uuid.UUID `json:"group_id"`
+	UserID    uuid.UUID `json:"user_id"`
+	CreatedAt time.Time `json:"created_at"`
+	UpdatedAt time.Time `json:"updated_at"`
 }
 
 // Table to store settlement information

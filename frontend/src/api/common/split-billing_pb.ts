@@ -21,37 +21,27 @@ export class SplitBillingModel extends Message<SplitBillingModel> {
   name = "";
 
   /**
-   * @generated from field: string description = 3;
-   */
-  description = "";
-
-  /**
-   * @generated from field: string group_id = 4;
+   * @generated from field: string group_id = 3;
    */
   groupId = "";
 
   /**
-   * @generated from field: int64 amount = 5;
+   * @generated from field: int64 amount = 4;
    */
   amount = protoInt64.zero;
 
   /**
-   * @generated from field: string advance_payer_id = 6;
+   * @generated from field: string advance_payer_id = 5;
    */
   advancePayerId = "";
 
   /**
-   * @generated from field: string split_billing_type = 7;
+   * @generated from field: string split_billing_type = 6;
    */
   splitBillingType = "";
 
   /**
-   * @generated from field: repeated common.SplitBillingModel.Member members = 8;
-   */
-  members: SplitBillingModel_Member[] = [];
-
-  /**
-   * @generated from field: string status = 9;
+   * @generated from field: string status = 7;
    */
   status = "";
 
@@ -65,13 +55,11 @@ export class SplitBillingModel extends Message<SplitBillingModel> {
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
     { no: 1, name: "id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 2, name: "name", kind: "scalar", T: 9 /* ScalarType.STRING */ },
-    { no: 3, name: "description", kind: "scalar", T: 9 /* ScalarType.STRING */ },
-    { no: 4, name: "group_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
-    { no: 5, name: "amount", kind: "scalar", T: 3 /* ScalarType.INT64 */ },
-    { no: 6, name: "advance_payer_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
-    { no: 7, name: "split_billing_type", kind: "scalar", T: 9 /* ScalarType.STRING */ },
-    { no: 8, name: "members", kind: "message", T: SplitBillingModel_Member, repeated: true },
-    { no: 9, name: "status", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 3, name: "group_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 4, name: "amount", kind: "scalar", T: 3 /* ScalarType.INT64 */ },
+    { no: 5, name: "advance_payer_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 6, name: "split_billing_type", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 7, name: "status", kind: "scalar", T: 9 /* ScalarType.STRING */ },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): SplitBillingModel {
@@ -88,43 +76,6 @@ export class SplitBillingModel extends Message<SplitBillingModel> {
 
   static equals(a: SplitBillingModel | PlainMessage<SplitBillingModel> | undefined, b: SplitBillingModel | PlainMessage<SplitBillingModel> | undefined): boolean {
     return proto3.util.equals(SplitBillingModel, a, b);
-  }
-}
-
-/**
- * @generated from message common.SplitBillingModel.Member
- */
-export class SplitBillingModel_Member extends Message<SplitBillingModel_Member> {
-  /**
-   * @generated from field: string user_id = 1;
-   */
-  userId = "";
-
-  constructor(data?: PartialMessage<SplitBillingModel_Member>) {
-    super();
-    proto3.util.initPartial(data, this);
-  }
-
-  static readonly runtime: typeof proto3 = proto3;
-  static readonly typeName = "common.SplitBillingModel.Member";
-  static readonly fields: FieldList = proto3.util.newFieldList(() => [
-    { no: 1, name: "user_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
-  ]);
-
-  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): SplitBillingModel_Member {
-    return new SplitBillingModel_Member().fromBinary(bytes, options);
-  }
-
-  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): SplitBillingModel_Member {
-    return new SplitBillingModel_Member().fromJson(jsonValue, options);
-  }
-
-  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): SplitBillingModel_Member {
-    return new SplitBillingModel_Member().fromJsonString(jsonString, options);
-  }
-
-  static equals(a: SplitBillingModel_Member | PlainMessage<SplitBillingModel_Member> | undefined, b: SplitBillingModel_Member | PlainMessage<SplitBillingModel_Member> | undefined): boolean {
-    return proto3.util.equals(SplitBillingModel_Member, a, b);
   }
 }
 
