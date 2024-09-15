@@ -11,6 +11,7 @@ import (
 
 	"connectrpc.com/connect"
 	firebase "firebase.google.com/go/v4"
+	"firebase.google.com/go/v4/auth"
 	"github.com/CityBear3/WariCan/handler/wallet_api"
 	"github.com/CityBear3/WariCan/internal/app_service/wallet_app_service"
 	"github.com/CityBear3/WariCan/internal/infrastructure/config"
@@ -39,14 +40,20 @@ func main() {
 			dbConfig.Host, dbConfig.Port, dbConfig.Name, dbConfig.User, dbConfig.Password, dbConfig.SSLMode),
 	)
 
-	app, err := firebase.NewApp(ctx, nil)
-	if err != nil {
-		panic(err)
-	}
+	// Develop環境の時、Firebaseを使わない
+	var authClient *auth.Client = nil;
+	if !serverConfig.IsDevelopment {
+		app, err := firebase.NewApp(ctx, nil)
+		if err != nil {
+			panic(err)
+		}
 
-	authClient, err := app.Auth(ctx)
-	if err != nil {
-		panic(err)
+		client, err := app.Auth(ctx)
+		if err != nil {
+			panic(err)
+		}
+
+		authClient = client
 	}
 
 	interceptors := connect.WithInterceptors(
