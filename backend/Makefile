@@ -19,6 +19,10 @@ db-migrate:
 db-clean:
 	migrate --path schema/db/migrations --database $(DB_URL) -verbose down
 
+.PHONY: db-insert
+db-insert:
+	PGPASSWORD=$(DB_PASSWORD) psql -h $(DB_HOST) -p $(DB_PORT) -U $(DB_USER) -d $(DB_NAME) -a -f schema/db/sample/insert-sample.sql
+
 .PHONY: gen-api-schema
 gen-api-schema:
 	rm -r ./protobuf/*
