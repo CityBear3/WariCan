@@ -3,6 +3,6 @@ plugins:
   - local: protoc-gen-es
     out: src/api
     opt: target=ts
-  - local: protoc-gen-connect-es
+  - local: protoc-gen-connect-query
     out: ../frontend/src/api
     opt: target=ts
