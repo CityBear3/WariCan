@@ -23,7 +23,7 @@ func NewDBConfig() *DBConfig {
 	}
 
 	dbName := os.Getenv("DB_NAME")
-	if dbName != "" {
+	if dbName == "" {
 		dbName = "warican"
 	}
 
