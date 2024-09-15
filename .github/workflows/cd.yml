@@ -42,6 +42,7 @@ jobs:
           --memory 1Gi
           --cpu 1
           --port 8080
+          --use-http2
           --add-cloudsql-instances ${{ secrets.CLOUD_SQL_INSTANCE_NAME }}
           --update-env-vars DB_HOST=${{ secrets.DB_HOST }}
           --update-secrets DB_USER=DB_USER:latest,DB_PASSWORD=DB_PASSWORD:latest
