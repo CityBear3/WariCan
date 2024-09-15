@@ -1,0 +1,44 @@
+syntax = "proto3";
+
+package warican.api.group;
+
+option go_package = "github.com/CityBear3/WariCan/protobuf/group;groupApi";
+
+import "common/user.proto";
+
+service Group {
+  rpc CreateV1(GroupCreateV1.Request) returns (GroupCreateV1.Response) {}
+  rpc GetV1(GroupGetV1.Request) returns (GroupGetV1.Response) {}
+}
+
+message GroupCreateV1 {
+  message Request {
+    string name = 1;
+    string description = 2;
+    repeated Member members = 3;
+  }
+
+  message Response {
+    string group_id = 1;
+    string name = 2;
+    string description = 3;
+    repeated common.UserModel members = 4;
+  }
+
+  message Member {
+    string user_id = 1;
+  }
+}
+
+message GroupGetV1 {
+  message Request {
+    string group_id = 1;
+  }
+
+  message Response {
+    string group_id = 1;
+    string name = 2;
+    string description = 3;
+    repeated common.UserModel members = 4;
+  }
+}
