@@ -48,6 +48,25 @@ func (h Handler) DepositV1(ctx context.Context, c *connect.Request[walletApi.Wal
 }
 
 func (h Handler) GetV1(ctx context.Context, c *connect.Request[emptypb.Empty]) (*connect.Response[walletApi.WalletGetV1_Response], error) {
-	//TODO implement me
-	panic("implement me")
+	actx, err := app_context.GetAppContext(ctx)
+	if err != nil {
+		//TODO log
+		return nil, connectrpc.CreateErrorResponse(err)
+	}
+
+	result, err := h.walletAppService.Deposit(ctx, actx, wallet_app_service.DepositRequest{
+		UserID: actx.UserID,
+	})
+	if err != nil {
+		//TODO log
+		return nil, connectrpc.CreateErrorResponse(err)
+	}
+
+	return connect.NewResponse(&walletApi.WalletGetV1_Response{
+		Wallet: &commonApiModel.WalletModel{
+			Balance: &commonApiModel.WalletModel_Balance{
+				Amount: result.Balance().GetAmount(),
+			},
+		},
+	}), nil
 }
