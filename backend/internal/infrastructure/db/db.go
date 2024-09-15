@@ -22,6 +22,10 @@ func NewConnection(source string) *Connection {
 	return &Connection{conn: db}
 }
 
+func (c Connection) Conn() *sql.DB {
+	return c.conn
+}
+
 func (c Connection) BeginTransaction(ctx context.Context, f func(ctx context.Context, tx transaction.Transaction) error) error {
 	tx, err := c.conn.BeginTx(ctx, nil)
 	if err != nil {

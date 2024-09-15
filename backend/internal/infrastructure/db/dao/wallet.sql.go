@@ -38,8 +38,7 @@ func (q *Queries) GetWalletByUserID(ctx context.Context, userID uuid.UUID) (Wall
 const updateWalletBalance = `-- name: UpdateWalletBalance :exec
 UPDATE wallet
 SET balance = $2
-WHERE user_id = $1
-RETURNING id, user_id, balance, created_at, updated_at
+WHERE user_id = $1 RETURNING id, user_id, balance, created_at, updated_at
 `
 
 type UpdateWalletBalanceParams struct {
