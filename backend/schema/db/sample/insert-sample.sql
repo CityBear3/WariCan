@@ -12,6 +12,18 @@ INSERT INTO "user" (
   , 'mishima@example.com'
   , '恵子'
   , '三島'
+), (
+  '45E144DC-15A3-4F9F-8A6C-FD3F27B297B1'
+  , 'FFE71704-1E91-46CF-BCC8-0DD210762493'
+  , 'tomoaki@example.com'
+  , '智昭'
+  , '三島'
+), (
+  '02E7AA00-3057-462A-98F6-0B076638BC25'
+  , '1E7878FF-17E2-4A4E-8EF9-BFAAA235229A'
+  , 'teruyuki@example.com'
+  , '照之'
+  , '大河'
 );
 
 TRUNCATE TABLE "user_profile" CASCADE;

@@ -1,10 +1,10 @@
 import { depositV1, getV1 } from "@/api/wallet/wallet-Wallet_connectquery";
 import { WalletModel } from "@/domain/wallet";
 import { useMutation, useQuery } from "@connectrpc/connect-query";
-import { MutationHook, QueryHook } from "./common";
+import { MutateOptions, QueryHook } from "./common";
 import { WalletDepositV1_Response } from "../wallet/wallet_pb";
 
-export const useDeposit: MutationHook<{ wallet: WalletModel }> = (options) => {
+export const useDeposit = (options: MutateOptions<{ wallet: WalletModel }>) => {
   const onSuccess = (res: WalletDepositV1_Response) => {
     const balance = res?.wallet?.balance?.amount;
     if (balance === undefined) {
@@ -26,7 +26,7 @@ export const useDeposit: MutationHook<{ wallet: WalletModel }> = (options) => {
   useMutation(depositV1, { onSuccess, onError });
 };
 
-export const useWallet: QueryHook<{ wallet: WalletModel }> = () => {
+export const useWallet: QueryHook<never, { wallet: WalletModel }> = () => {
   const { isLoading, isError, data } = useQuery(getV1);
 
   if (isLoading || isError) return { isLoading, isError };
