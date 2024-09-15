@@ -7,6 +7,7 @@ import (
 	"github.com/CityBear3/WariCan/internal/domain/group"
 	"github.com/CityBear3/WariCan/internal/domain/transaction"
 	"github.com/CityBear3/WariCan/internal/infrastructure/db/dao"
+	"github.com/jackc/pgx/v5/pgtype"
 )
 
 func NewGroupRepository() group.RepoFunc {
@@ -29,7 +30,9 @@ func (r Repository) Create(ctx context.Context, actx app_context.AppContext, cre
 		Name:        creatingGroup.Name().String(),
 		Description: creatingGroup.Description().String(),
 		OwnerID:     creatingGroup.OwnerID().UUID(),
-		CreatedAt:   actx.CurrentTime,
+		CreatedAt: pgtype.Timestamptz{
+			Time: actx.CurrentTime,
+		},
 	}
 
 	return r.queries.CreateGroup(ctx, params)

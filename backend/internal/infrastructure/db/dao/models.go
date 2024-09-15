@@ -5,98 +5,96 @@
 package dao
 
 import (
-	"database/sql"
-	"time"
-
-	"github.com/google/uuid"
+	uuid "github.com/google/uuid"
+	"github.com/jackc/pgx/v5/pgtype"
 )
 
 // A group of users that split bills
 type Group struct {
-	ID          uuid.UUID `json:"id"`
-	Name        string    `json:"name"`
-	Description string    `json:"description"`
-	OwnerID     uuid.UUID `json:"owner_id"`
-	CreatedAt   time.Time `json:"created_at"`
-	UpdatedAt   time.Time `json:"updated_at"`
+	ID          uuid.UUID          `json:"id"`
+	Name        string             `json:"name"`
+	Description string             `json:"description"`
+	OwnerID     uuid.UUID          `json:"owner_id"`
+	CreatedAt   pgtype.Timestamptz `json:"created_at"`
+	UpdatedAt   pgtype.Timestamptz `json:"updated_at"`
 }
 
 // group_member
 type GroupMember struct {
-	ID        uuid.UUID `json:"id"`
-	GroupID   uuid.UUID `json:"group_id"`
-	UserID    uuid.UUID `json:"user_id"`
-	CreatedAt time.Time `json:"created_at"`
-	UpdatedAt time.Time `json:"updated_at"`
+	ID        uuid.UUID          `json:"id"`
+	GroupID   uuid.UUID          `json:"group_id"`
+	UserID    uuid.UUID          `json:"user_id"`
+	CreatedAt pgtype.Timestamptz `json:"created_at"`
+	UpdatedAt pgtype.Timestamptz `json:"updated_at"`
 }
 
 // Table to store settlement information
 type Settlement struct {
-	ID             uuid.UUID `json:"id"`
-	FromUserID     uuid.UUID `json:"from_user_id"`
-	ToUserID       uuid.UUID `json:"to_user_id"`
-	SplitBillingID uuid.UUID `json:"split_billing_id"`
-	Amount         int32     `json:"amount"`
-	CreatedAt      time.Time `json:"created_at"`
-	UpdatedAt      time.Time `json:"updated_at"`
+	ID             uuid.UUID          `json:"id"`
+	FromUserID     uuid.UUID          `json:"from_user_id"`
+	ToUserID       uuid.UUID          `json:"to_user_id"`
+	SplitBillingID uuid.UUID          `json:"split_billing_id"`
+	Amount         int32              `json:"amount"`
+	CreatedAt      pgtype.Timestamptz `json:"created_at"`
+	UpdatedAt      pgtype.Timestamptz `json:"updated_at"`
 }
 
 // Table to store settlement status information
 type SettlementStatus struct {
-	ID           uuid.UUID `json:"id"`
-	SettlementID uuid.UUID `json:"settlement_id"`
-	Status       string    `json:"status"`
-	CreatedAt    time.Time `json:"created_at"`
-	UpdatedAt    time.Time `json:"updated_at"`
+	ID           uuid.UUID          `json:"id"`
+	SettlementID uuid.UUID          `json:"settlement_id"`
+	Status       string             `json:"status"`
+	CreatedAt    pgtype.Timestamptz `json:"created_at"`
+	UpdatedAt    pgtype.Timestamptz `json:"updated_at"`
 }
 
 // Table to store split billing information
 type SplitBilling struct {
-	ID               uuid.UUID `json:"id"`
-	GroupID          uuid.UUID `json:"group_id"`
-	Name             string    `json:"name"`
-	Amount           int32     `json:"amount"`
-	AdvancePayerID   uuid.UUID `json:"advance_payer_id"`
-	SplitBillingType string    `json:"split_billing_type"`
-	CreatedAt        time.Time `json:"created_at"`
-	UpdatedAt        time.Time `json:"updated_at"`
+	ID               uuid.UUID          `json:"id"`
+	GroupID          uuid.UUID          `json:"group_id"`
+	Name             string             `json:"name"`
+	Amount           int32              `json:"amount"`
+	AdvancePayerID   uuid.UUID          `json:"advance_payer_id"`
+	SplitBillingType string             `json:"split_billing_type"`
+	CreatedAt        pgtype.Timestamptz `json:"created_at"`
+	UpdatedAt        pgtype.Timestamptz `json:"updated_at"`
 }
 
 // Table to store split billing status information
 type SplitBillingStatus struct {
-	ID             uuid.UUID `json:"id"`
-	SplitBillingID uuid.UUID `json:"split_billing_id"`
-	Status         string    `json:"status"`
-	CreatedAt      time.Time `json:"created_at"`
-	UpdatedAt      time.Time `json:"updated_at"`
+	ID             uuid.UUID          `json:"id"`
+	SplitBillingID uuid.UUID          `json:"split_billing_id"`
+	Status         string             `json:"status"`
+	CreatedAt      pgtype.Timestamptz `json:"created_at"`
+	UpdatedAt      pgtype.Timestamptz `json:"updated_at"`
 }
 
 // User table
 type User struct {
-	ID        uuid.UUID `json:"id"`
-	Uid       uuid.UUID `json:"uid"`
-	Email     string    `json:"email"`
-	FirstName string    `json:"first_name"`
-	LastName  string    `json:"last_name"`
-	CreatedAt time.Time `json:"created_at"`
-	UpdatedAt time.Time `json:"updated_at"`
+	ID        uuid.UUID          `json:"id"`
+	Uid       uuid.UUID          `json:"uid"`
+	Email     string             `json:"email"`
+	FirstName string             `json:"first_name"`
+	LastName  string             `json:"last_name"`
+	CreatedAt pgtype.Timestamptz `json:"created_at"`
+	UpdatedAt pgtype.Timestamptz `json:"updated_at"`
 }
 
 // User profile table
 type UserProfile struct {
-	ID        uuid.UUID      `json:"id"`
-	UserID    uuid.UUID      `json:"user_id"`
-	Tags      sql.NullString `json:"tags"`
-	ImageUrl  sql.NullString `json:"image_url"`
-	CreatedAt time.Time      `json:"created_at"`
-	UpdatedAt time.Time      `json:"updated_at"`
+	ID        uuid.UUID          `json:"id"`
+	UserID    uuid.UUID          `json:"user_id"`
+	Tags      pgtype.Text        `json:"tags"`
+	ImageUrl  pgtype.Text        `json:"image_url"`
+	CreatedAt pgtype.Timestamptz `json:"created_at"`
+	UpdatedAt pgtype.Timestamptz `json:"updated_at"`
 }
 
 // Table to store wallet information
 type Wallet struct {
-	ID        uuid.UUID `json:"id"`
-	UserID    uuid.UUID `json:"user_id"`
-	Balance   string    `json:"balance"`
-	CreatedAt time.Time `json:"created_at"`
-	UpdatedAt time.Time `json:"updated_at"`
+	ID        uuid.UUID          `json:"id"`
+	UserID    uuid.UUID          `json:"user_id"`
+	Balance   pgtype.Numeric     `json:"balance"`
+	CreatedAt pgtype.Timestamptz `json:"created_at"`
+	UpdatedAt pgtype.Timestamptz `json:"updated_at"`
 }

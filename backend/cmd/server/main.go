@@ -39,10 +39,9 @@ func main() {
 		log.Println("Production mode")
 	}
 
-	dbConn := db.NewConnection(
-		fmt.Sprintf("host=%s port=%s user=postgres dbname=%s user=%s password=%s sslmode=%s",
-			dbConfig.Host, dbConfig.Port, dbConfig.Name, dbConfig.User, dbConfig.Password, dbConfig.SSLMode),
-	)
+	dbURL := fmt.Sprintf("postgres://%s:%s@%s:%s/%s?sslmode=%s",
+		dbConfig.User, dbConfig.Password, dbConfig.Host, dbConfig.Port, dbConfig.Name, dbConfig.SSLMode)
+	dbConn := db.NewConnection(ctx, dbURL)
 
 	// Develop環境の時、Firebaseを使わない
 	var authClient *auth.Client = nil

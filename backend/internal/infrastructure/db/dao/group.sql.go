@@ -7,9 +7,9 @@ package dao
 
 import (
 	"context"
-	"time"
 
-	"github.com/google/uuid"
+	uuid "github.com/google/uuid"
+	"github.com/jackc/pgx/v5/pgtype"
 )
 
 const createGroup = `-- name: CreateGroup :exec
@@ -18,15 +18,15 @@ VALUES ($1, $2, $3, $4, $5)
 `
 
 type CreateGroupParams struct {
-	ID          uuid.UUID `json:"id"`
-	Name        string    `json:"name"`
-	Description string    `json:"description"`
-	OwnerID     uuid.UUID `json:"owner_id"`
-	CreatedAt   time.Time `json:"created_at"`
+	ID          uuid.UUID          `json:"id"`
+	Name        string             `json:"name"`
+	Description string             `json:"description"`
+	OwnerID     uuid.UUID          `json:"owner_id"`
+	CreatedAt   pgtype.Timestamptz `json:"created_at"`
 }
 
 func (q *Queries) CreateGroup(ctx context.Context, arg CreateGroupParams) error {
-	_, err := q.db.ExecContext(ctx, createGroup,
+	_, err := q.db.Exec(ctx, createGroup,
 		arg.ID,
 		arg.Name,
 		arg.Description,
@@ -57,7 +57,7 @@ type GetGroupByIDRow struct {
 
 // :param groupID uuid
 func (q *Queries) GetGroupByID(ctx context.Context, id uuid.UUID) ([]GetGroupByIDRow, error) {
-	rows, err := q.db.QueryContext(ctx, getGroupByID, id)
+	rows, err := q.db.Query(ctx, getGroupByID, id)
 	if err != nil {
 		return nil, err
 	}
@@ -75,9 +75,6 @@ func (q *Queries) GetGroupByID(ctx context.Context, id uuid.UUID) ([]GetGroupByI
 			return nil, err
 		}
 		items = append(items, i)
-	}
-	if err := rows.Close(); err != nil {
-		return nil, err
 	}
 	if err := rows.Err(); err != nil {
 		return nil, err
