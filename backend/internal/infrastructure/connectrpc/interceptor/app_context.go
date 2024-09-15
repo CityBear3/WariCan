@@ -27,10 +27,7 @@ func (a AppContextInterceptor) WrapUnary(next connect.UnaryFunc) connect.UnaryFu
 			return next(ctx, req)
 		}
 
-		userID, err := parseUserID(ctx.Value(UserIDContextKey).(string))
-		if err != nil {
-			return nil, errors.New("failed to parse user id")
-		}
+		userID := ctx.Value(UserIDContextKey).(user.ID)
 
 		actx, err := createAppContext(req.Header().Get(
 			IdempotencyKeyHeader),
@@ -53,10 +50,7 @@ func (a AppContextInterceptor) WrapStreamingClient(next connect.StreamingClientF
 
 func (a AppContextInterceptor) WrapStreamingHandler(next connect.StreamingHandlerFunc) connect.StreamingHandlerFunc {
 	return func(ctx context.Context, conn connect.StreamingHandlerConn) error {
-		userID, err := parseUserID(conn.RequestHeader().Get(UserIDContextKey))
-		if err != nil {
-			return errors.New("failed to parse user id")
-		}
+		userID := ctx.Value(UserIDContextKey).(user.ID)
 
 		actx, err := createAppContext(
 			conn.RequestHeader().Get(IdempotencyKeyHeader),
@@ -81,13 +75,4 @@ func createAppContext(idempotencyKeyStr string, userID user.ID) (app_context.App
 	actx := app_context.NewAppContext(idempotencyKey, uuid.New(), userID, time.Now().UTC())
 
 	return actx, nil
-}
-
-func parseUserID(userIDStr string) (user.ID, error) {
-	parse, err := uuid.Parse(userIDStr)
-	if err != nil {
-		return user.ID{}, err
-	}
-
-	return user.NewUserID(parse), nil
 }

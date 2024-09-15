@@ -28,9 +28,15 @@ func main() {
 	serverConfig := config.NewServerConfig()
 	dbConfig := config.NewDBConfig()
 
+	if serverConfig.IsDevelopment {
+		log.Println("Development mode")
+	} else {
+		log.Println("Production mode")
+	}
+
 	dbConn := db.NewConnection(
-		fmt.Sprintf("host=%s port=%s user=postgres dbname=%s password=%s sslmode=%s",
-			dbConfig.Host, dbConfig.Port, dbConfig.Name, dbConfig.Password, dbConfig.SSLMode),
+		fmt.Sprintf("host=%s port=%s user=postgres dbname=%s user=%s password=%s sslmode=%s",
+			dbConfig.Host, dbConfig.Port, dbConfig.Name, dbConfig.User, dbConfig.Password, dbConfig.SSLMode),
 	)
 
 	app, err := firebase.NewApp(ctx, nil)
@@ -70,7 +76,7 @@ func main() {
 		),
 	}
 
-	log.Println("server start on port")
+	log.Printf("server start on port: %s\n", serverConfig.Port)
 	if err := svr.ListenAndServe(); err != nil {
 		panic(err)
 	}

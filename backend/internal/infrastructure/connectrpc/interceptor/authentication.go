@@ -41,10 +41,13 @@ func (a AuthenticationInterceptor) WrapUnary(next connect.UnaryFunc) connect.Una
 			userID := req.Header().Get(XDevelopmentUserHeader)
 			parse, err := uuid.Parse(userID)
 			if err == nil {
+				log.Printf("development user id: %v\n", parse)
 				return next(
 					context.WithValue(ctx, UserIDContextKey, user.ID(parse)),
 					req,
 				)
+			} else {
+				log.Printf("failed to parse development user id: %v\n", err)
 			}
 		}
 
@@ -70,10 +73,13 @@ func (a AuthenticationInterceptor) WrapStreamingHandler(next connect.StreamingHa
 			userID := conn.RequestHeader().Get(XDevelopmentUserHeader)
 			parse, err := uuid.Parse(userID)
 			if err == nil {
+				log.Printf("development user id: %v\n", parse)
 				return next(
 					context.WithValue(ctx, UserIDContextKey, user.ID(parse)),
 					conn,
 				)
+			} else {
+				log.Printf("failed to parse development user id: %v\n", err)
 			}
 		}
 

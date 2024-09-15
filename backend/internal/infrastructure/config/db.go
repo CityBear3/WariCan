@@ -5,6 +5,7 @@ import "os"
 type DBConfig struct {
 	Host     string
 	Port     string
+	User     string
 	Name     string
 	Password string
 	SSLMode  string
@@ -26,6 +27,11 @@ func NewDBConfig() *DBConfig {
 		dbName = "warican"
 	}
 
+	dbUser := os.Getenv("DB_USER")
+	if dbUser == "" {
+		dbUser = "warican"
+	}
+
 	dbPassword := os.Getenv("DB_PASSWORD")
 	if dbPassword == "" {
 		panic("DB_PASSWORD is required")
@@ -40,6 +46,7 @@ func NewDBConfig() *DBConfig {
 		Host:     dbHost,
 		Port:     dbPort,
 		Name:     dbName,
+		User:     dbUser,
 		Password: dbPassword,
 		SSLMode:  sslMode,
 	}
