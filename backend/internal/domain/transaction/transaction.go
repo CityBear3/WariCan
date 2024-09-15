@@ -2,7 +2,8 @@ package transaction
 
 import (
 	"context"
-	"database/sql"
+
+	"github.com/jackc/pgx/v5"
 )
 
 type Connection interface {
@@ -10,4 +11,4 @@ type Connection interface {
 	BeginROTransaction(ctx context.Context, f func(ctx context.Context, tx Transaction) error) error
 }
 
-type Transaction = *sql.Tx
+type Transaction = pgx.Tx

@@ -12,3 +12,8 @@ WHERE g.id = $1;
 -- name: CreateGroup :exec
 INSERT INTO "group" ("id", "name", "description", "owner_id", "created_at")
 VALUES ($1, $2, $3, $4, $5);
+
+-- name: CreateGroupMember :copyfrom
+INSERT INTO "group_member" (id, group_id, user_id, created_at)
+VALUES ($1, $2, $3, $4);
+

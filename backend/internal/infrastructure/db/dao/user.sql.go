@@ -8,7 +8,7 @@ package dao
 import (
 	"context"
 
-	"github.com/google/uuid"
+	uuid "github.com/google/uuid"
 )
 
 const getUserByUID = `-- name: GetUserByUID :one
@@ -19,7 +19,7 @@ WHERE "uid" = $1
 
 // :param uid uuid
 func (q *Queries) GetUserByUID(ctx context.Context, uid uuid.UUID) (User, error) {
-	row := q.db.QueryRowContext(ctx, getUserByUID, uid)
+	row := q.db.QueryRow(ctx, getUserByUID, uid)
 	var i User
 	err := row.Scan(
 		&i.ID,

@@ -8,7 +8,8 @@ package dao
 import (
 	"context"
 
-	"github.com/google/uuid"
+	uuid "github.com/google/uuid"
+	"github.com/jackc/pgx/v5/pgtype"
 )
 
 const getWalletByUserID = `-- name: GetWalletByUserID :one
@@ -23,7 +24,7 @@ WHERE user_id = $1
 
 // :param userID uuid
 func (q *Queries) GetWalletByUserID(ctx context.Context, userID uuid.UUID) (Wallet, error) {
-	row := q.db.QueryRowContext(ctx, getWalletByUserID, userID)
+	row := q.db.QueryRow(ctx, getWalletByUserID, userID)
 	var i Wallet
 	err := row.Scan(
 		&i.ID,
@@ -42,13 +43,13 @@ WHERE user_id = $1 RETURNING id, user_id, balance, created_at, updated_at
 `
 
 type UpdateWalletBalanceParams struct {
-	UserID  uuid.UUID `json:"user_id"`
-	Balance string    `json:"balance"`
+	UserID  uuid.UUID      `json:"user_id"`
+	Balance pgtype.Numeric `json:"balance"`
 }
 
 // :param userID uuid
 // :param balance decimal
 func (q *Queries) UpdateWalletBalance(ctx context.Context, arg UpdateWalletBalanceParams) error {
-	_, err := q.db.ExecContext(ctx, updateWalletBalance, arg.UserID, arg.Balance)
+	_, err := q.db.Exec(ctx, updateWalletBalance, arg.UserID, arg.Balance)
 	return err
 }
