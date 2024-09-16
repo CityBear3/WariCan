@@ -24,11 +24,11 @@ const Group: React.FC<Props> = ({ params: { id } }) => {
 
   const { users, ...usersState } = useConnectedUsers();
 
-  const { group, splitBillings, ...groupState } = useGroup({ id });
+  const { group, ...groupState } = useGroup({ id });
 
   if (usersState.isLoading || usersState.isError || !users) return <></>;
   if (groupState.isLoading || groupState.isError) return <></>;
-  if (!group || !splitBillings) return <></>;
+  if (!group) return <></>;
 
   const members = users.filter((user) => group.members.includes(user.id));
 
@@ -56,13 +56,14 @@ const Group: React.FC<Props> = ({ params: { id } }) => {
         />
       </HStack>
       <FoldableSection title="これまでの割り勘" margin="20px">
-        <List>
+        <></>
+        {/* <List>
           {splitBillings.map((splitBilling) => (
             <ListItem key={splitBilling.id} margin="20px 0px">
               <SplitBillingRow splitBilling={splitBilling} />
             </ListItem>
           ))}
-        </List>
+        </List> */}
       </FoldableSection>
       <FoldableSection title="メンバー" margin="20px">
         <UserList users={members} />
