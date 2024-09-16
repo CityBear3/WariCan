@@ -1,12 +1,10 @@
 syntax = "proto3";
 
-package grpc.health.v1;
+package warican.api.health;
 
 option go_package = "github.com/CityBear3/WariCan/protobuf/health;healthApi";
 
-message HealthCheckRequest {
-  string service = 1;
-}
+import "google/protobuf/empty.proto";
 
 message HealthCheckResponse {
   enum ServingStatus {
@@ -19,7 +17,5 @@ message HealthCheckResponse {
 }
 
 service Health {
-  rpc Check(HealthCheckRequest) returns (HealthCheckResponse);
-
-  rpc Watch(HealthCheckRequest) returns (stream HealthCheckResponse);
+  rpc Check(google.protobuf.Empty) returns (HealthCheckResponse);
 }
