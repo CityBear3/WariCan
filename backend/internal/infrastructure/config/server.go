@@ -11,7 +11,7 @@ type ServerConfig struct {
 func NewServerConfig() *ServerConfig {
 	host := os.Getenv("HOST")
 	if host == "" {
-		host = "localhost"
+		host = "0.0.0.0"
 	}
 
 	port := os.Getenv("PORT")
