@@ -1,0 +1,46 @@
+name: cd-ui
+on:
+  push:
+    branches:
+      - main
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3
+      - id: 'auth'
+        name: 'Authenticate to Google Cloud'
+        uses: 'google-github-actions/auth@v2'
+        with:
+          workload_identity_provider: '${{ secrets.WORKLOAD_IDENTITY_PROVIDER }}'
+          service_account: '${{ secrets.SERVICE_ACCOUNT }}'
+      - name: 'Set up Cloud SDK'
+        uses: 'google-github-actions/setup-gcloud@v2'
+        with:
+          version: 'latest'
+          install_components: 'beta'
+      - name: 'Configure Docker'
+        run: gcloud auth configure-docker ${{ secrets.REGION }}-docker.pkg.dev
+      - name: 'Build Docker Image (ui)'
+        run: docker build -t ${{ secrets.REGION }}-docker.pkg.dev/${{ secrets.GOOGLE_PROJECT_ID }}/${{ secrets.ARTIFACT_REGISTRY_REPOSITORY }}/warican-ui:${{ github.sha }} ./frontend
+      - name: 'Push Docker Image (ui)'
+        run: docker push ${{ secrets.REGION }}-docker.pkg.dev/${{ secrets.GOOGLE_PROJECT_ID }}/${{ secrets.ARTIFACT_REGISTRY_REPOSITORY }}/warican-ui:${{ github.sha }}
+      - name: 'Deploy to Cloud Run (ui)'
+        run: >
+          gcloud beta run deploy warican-ui
+          --image ${{ secrets.REGION }}-docker.pkg.dev/${{ secrets.GOOGLE_PROJECT_ID }}/${{ secrets.ARTIFACT_REGISTRY_REPOSITORY }}/warican-ui:${{ github.sha }}
+          --region ${{ secrets.REGION }}
+          --service-account ${{ secrets.RUN_UI_SERVICE_ACCOUNT }}
+          --platform managed --region ${{ secrets.REGION }}
+          --allow-unauthenticated
+          --service-min-instances 0
+          --max-instances 2
+          --memory 512Mi
+          --cpu 1
+          --port 3000
+          --update-secrets NEXT_PUBLIC_DEVELOPMENT_USER=DEV_USER:latest
+          --revision-suffix ${{ github.sha }}
