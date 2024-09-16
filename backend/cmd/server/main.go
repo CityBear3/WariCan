@@ -14,6 +14,7 @@ import (
 	"firebase.google.com/go/v4/auth"
 	"github.com/CityBear3/WariCan/handler/connection_api"
 	"github.com/CityBear3/WariCan/handler/group_api"
+	"github.com/CityBear3/WariCan/handler/health_api"
 	"github.com/CityBear3/WariCan/handler/wallet_api"
 	"github.com/CityBear3/WariCan/internal/app_service/group_app_service"
 	"github.com/CityBear3/WariCan/internal/app_service/wallet_app_service"
@@ -24,6 +25,7 @@ import (
 	"github.com/CityBear3/WariCan/internal/infrastructure/wallet_repository"
 	"github.com/CityBear3/WariCan/protobuf/connection/connectionApiconnect"
 	"github.com/CityBear3/WariCan/protobuf/group/groupApiconnect"
+	"github.com/CityBear3/WariCan/protobuf/health/healthApiconnect"
 	"github.com/CityBear3/WariCan/protobuf/wallet/walletApiconnect"
 	"github.com/rs/cors"
 	"golang.org/x/net/http2"
@@ -101,11 +103,14 @@ func main() {
 		interceptors,
 	)
 
+	healthPath, healthHandler := healthApiconnect.NewHealthHandler(health_api.Handler{})
+
 	mux := http.NewServeMux()
 
 	mux.Handle(walletPath, walletHandler)
 	mux.Handle(groupPath, groupHandler)
 	mux.Handle(connectionPath, connectionHandler)
+	mux.Handle(healthPath, healthHandler)
 
 	svr := http.Server{
 		Addr: fmt.Sprintf("%s:%s", serverConfig.Host, serverConfig.Port),
