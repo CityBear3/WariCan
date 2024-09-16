@@ -35,6 +35,7 @@ const Wallet: React.FC = () => {
     {
       id: "sample id 1",
       name: "二次会 @居酒屋まっさん",
+      groupId: "sample id",
       amount: 50000,
       advancePayer: members[0],
       members,
@@ -44,6 +45,7 @@ const Wallet: React.FC = () => {
     {
       id: "sample id 2",
       name: "二次会 @居酒屋まっさん",
+      groupId: "sample id",
       amount: 50000,
       advancePayer: members[0],
       members,

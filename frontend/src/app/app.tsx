@@ -1,6 +1,6 @@
 "use client";
 
-import { ReactNode } from "react";
+import { ReactNode, Suspense } from "react";
 import { Header } from "./header";
 import { ProfileModal } from "@/components/modal/ProfileModal";
 import { useDisclosure } from "@chakra-ui/react";
@@ -24,7 +24,9 @@ export const App: React.FC<Props> = ({ children }) => {
       <header style={{ zIndex: 1, position: "fixed", width: "100%" }}>
         <Header user={user} onProfileOpen={onOpen} />
       </header>
-      <main style={{ height: "100%" }}>{children}</main>
+      <main style={{ height: "100%" }}>
+        <Suspense>{children}</Suspense>
+      </main>
       <ProfileModal user={user} isOpen={isOpen} onClose={onClose} />
     </>
   );

@@ -103,7 +103,10 @@ func main() {
 		interceptors,
 	)
 
-	healthPath, healthHandler := healthApiconnect.NewHealthHandler(health_api.Handler{})
+	healthPath, healthHandler := healthApiconnect.NewHealthHandler(
+		health_api.Handler{},
+		connect.WithInterceptors(interceptor.NewRequestLogInterceptor()),
+	)
 
 	mux := http.NewServeMux()
 

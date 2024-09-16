@@ -33,8 +33,10 @@ export const useGroup: QueryHook<
     group: GroupModel;
     splitBillings: SplitBillingModel[];
   }
-> = ({ id }: {id: string}) => {
-  const { isLoading, isError, data } = useQuery(getV1, { groupId: id });
+> = (input) => {
+  const { isLoading, isError, data } = useQuery(getV1, {
+    groupId: input?.id ?? "",
+  });
 
   if (isLoading || isError) return { isLoading, isError };
 
@@ -52,19 +54,19 @@ export const useGroup: QueryHook<
     }),
   };
 
-  const splitBillings: SplitBillingModel[] = data.splitBillings.map(
-    (splitBilling) => {
-      return {
-        id: splitBilling.id,
-        name: splitBilling.name,
-        groupId: splitBilling.groupId,
-        amount: Number(splitBilling.amount),
-        advancePayerId: splitBilling.advancePayerId,
-        type: splitBilling.splitBillingType as "EQUAL_SPLIT",
-        status: splitBilling.status as "ACTIVE" | "CLOSED",
-      };
-    }
-  );
+  // const splitBillings: SplitBillingModel[] = data.splitBillings.map(
+  //   (splitBilling) => {
+  //     return {
+  //       id: splitBilling.id,
+  //       name: splitBilling.name,
+  //       groupId: splitBilling.groupId,
+  //       amount: Number(splitBilling.amount),
+  //       advancePayerId: splitBilling.advancePayerId,
+  //       type: splitBilling.splitBillingType as "EQUAL_SPLIT",
+  //       status: splitBilling.status as "ACTIVE" | "CLOSED",
+  //     };
+  //   }
+  // );
 
-  return { isLoading, isError, group, splitBillings };
+  return { isLoading, isError, group };
 };
