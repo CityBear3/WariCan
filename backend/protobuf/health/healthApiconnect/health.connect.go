@@ -9,6 +9,7 @@ import (
 	context "context"
 	errors "errors"
 	health "github.com/CityBear3/WariCan/protobuf/health"
+	emptypb "google.golang.org/protobuf/types/known/emptypb"
 	http "net/http"
 	strings "strings"
 )
@@ -22,7 +23,7 @@ const _ = connect.IsAtLeastVersion1_13_0
 
 const (
 	// HealthName is the fully-qualified name of the Health service.
-	HealthName = "grpc.health.v1.Health"
+	HealthName = "warican.api.health.Health"
 )
 
 // These constants are the fully-qualified names of the RPCs defined in this package. They're
@@ -34,26 +35,22 @@ const (
 // period.
 const (
 	// HealthCheckProcedure is the fully-qualified name of the Health's Check RPC.
-	HealthCheckProcedure = "/grpc.health.v1.Health/Check"
-	// HealthWatchProcedure is the fully-qualified name of the Health's Watch RPC.
-	HealthWatchProcedure = "/grpc.health.v1.Health/Watch"
+	HealthCheckProcedure = "/warican.api.health.Health/Check"
 )
 
 // These variables are the protoreflect.Descriptor objects for the RPCs defined in this package.
 var (
 	healthServiceDescriptor     = health.File_health_health_proto.Services().ByName("Health")
 	healthCheckMethodDescriptor = healthServiceDescriptor.Methods().ByName("Check")
-	healthWatchMethodDescriptor = healthServiceDescriptor.Methods().ByName("Watch")
 )
 
-// HealthClient is a client for the grpc.health.v1.Health service.
+// HealthClient is a client for the warican.api.health.Health service.
 type HealthClient interface {
-	Check(context.Context, *connect.Request[health.HealthCheckRequest]) (*connect.Response[health.HealthCheckResponse], error)
-	Watch(context.Context, *connect.Request[health.HealthCheckRequest]) (*connect.ServerStreamForClient[health.HealthCheckResponse], error)
+	Check(context.Context, *connect.Request[emptypb.Empty]) (*connect.Response[health.HealthCheckResponse], error)
 }
 
-// NewHealthClient constructs a client for the grpc.health.v1.Health service. By default, it uses
-// the Connect protocol with the binary Protobuf Codec, asks for gzipped responses, and sends
+// NewHealthClient constructs a client for the warican.api.health.Health service. By default, it
+// uses the Connect protocol with the binary Protobuf Codec, asks for gzipped responses, and sends
 // uncompressed requests. To use the gRPC or gRPC-Web protocols, supply the connect.WithGRPC() or
 // connect.WithGRPCWeb() options.
 //
@@ -62,16 +59,10 @@ type HealthClient interface {
 func NewHealthClient(httpClient connect.HTTPClient, baseURL string, opts ...connect.ClientOption) HealthClient {
 	baseURL = strings.TrimRight(baseURL, "/")
 	return &healthClient{
-		check: connect.NewClient[health.HealthCheckRequest, health.HealthCheckResponse](
+		check: connect.NewClient[emptypb.Empty, health.HealthCheckResponse](
 			httpClient,
 			baseURL+HealthCheckProcedure,
 			connect.WithSchema(healthCheckMethodDescriptor),
-			connect.WithClientOptions(opts...),
-		),
-		watch: connect.NewClient[health.HealthCheckRequest, health.HealthCheckResponse](
-			httpClient,
-			baseURL+HealthWatchProcedure,
-			connect.WithSchema(healthWatchMethodDescriptor),
 			connect.WithClientOptions(opts...),
 		),
 	}
@@ -79,24 +70,17 @@ func NewHealthClient(httpClient connect.HTTPClient, baseURL string, opts ...conn
 
 // healthClient implements HealthClient.
 type healthClient struct {
-	check *connect.Client[health.HealthCheckRequest, health.HealthCheckResponse]
-	watch *connect.Client[health.HealthCheckRequest, health.HealthCheckResponse]
+	check *connect.Client[emptypb.Empty, health.HealthCheckResponse]
 }
 
-// Check calls grpc.health.v1.Health.Check.
-func (c *healthClient) Check(ctx context.Context, req *connect.Request[health.HealthCheckRequest]) (*connect.Response[health.HealthCheckResponse], error) {
+// Check calls warican.api.health.Health.Check.
+func (c *healthClient) Check(ctx context.Context, req *connect.Request[emptypb.Empty]) (*connect.Response[health.HealthCheckResponse], error) {
 	return c.check.CallUnary(ctx, req)
 }
 
-// Watch calls grpc.health.v1.Health.Watch.
-func (c *healthClient) Watch(ctx context.Context, req *connect.Request[health.HealthCheckRequest]) (*connect.ServerStreamForClient[health.HealthCheckResponse], error) {
-	return c.watch.CallServerStream(ctx, req)
-}
-
-// HealthHandler is an implementation of the grpc.health.v1.Health service.
+// HealthHandler is an implementation of the warican.api.health.Health service.
 type HealthHandler interface {
-	Check(context.Context, *connect.Request[health.HealthCheckRequest]) (*connect.Response[health.HealthCheckResponse], error)
-	Watch(context.Context, *connect.Request[health.HealthCheckRequest], *connect.ServerStream[health.HealthCheckResponse]) error
+	Check(context.Context, *connect.Request[emptypb.Empty]) (*connect.Response[health.HealthCheckResponse], error)
 }
 
 // NewHealthHandler builds an HTTP handler from the service implementation. It returns the path on
@@ -111,18 +95,10 @@ func NewHealthHandler(svc HealthHandler, opts ...connect.HandlerOption) (string,
 		connect.WithSchema(healthCheckMethodDescriptor),
 		connect.WithHandlerOptions(opts...),
 	)
-	healthWatchHandler := connect.NewServerStreamHandler(
-		HealthWatchProcedure,
-		svc.Watch,
-		connect.WithSchema(healthWatchMethodDescriptor),
-		connect.WithHandlerOptions(opts...),
-	)
-	return "/grpc.health.v1.Health/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+	return "/warican.api.health.Health/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case HealthCheckProcedure:
 			healthCheckHandler.ServeHTTP(w, r)
-		case HealthWatchProcedure:
-			healthWatchHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -132,10 +108,6 @@ func NewHealthHandler(svc HealthHandler, opts ...connect.HandlerOption) (string,
 // UnimplementedHealthHandler returns CodeUnimplemented from all methods.
 type UnimplementedHealthHandler struct{}
 
-func (UnimplementedHealthHandler) Check(context.Context, *connect.Request[health.HealthCheckRequest]) (*connect.Response[health.HealthCheckResponse], error) {
-	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("grpc.health.v1.Health.Check is not implemented"))
-}
-
-func (UnimplementedHealthHandler) Watch(context.Context, *connect.Request[health.HealthCheckRequest], *connect.ServerStream[health.HealthCheckResponse]) error {
-	return connect.NewError(connect.CodeUnimplemented, errors.New("grpc.health.v1.Health.Watch is not implemented"))
+func (UnimplementedHealthHandler) Check(context.Context, *connect.Request[emptypb.Empty]) (*connect.Response[health.HealthCheckResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("warican.api.health.Health.Check is not implemented"))
 }

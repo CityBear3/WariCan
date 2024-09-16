@@ -104,7 +104,7 @@ func main() {
 	)
 
 	healthPath, healthHandler := healthApiconnect.NewHealthHandler(
-		health_api.Handler{},
+		health_api.NewHandler(),
 		connect.WithInterceptors(interceptor.NewRequestLogInterceptor()),
 	)
 
