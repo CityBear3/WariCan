@@ -14,7 +14,7 @@ func NewName(name string) (Name, error) {
 		return "", ErrInvalidName
 	}
 
-	if len(name) > 20 {
+	if len(name) > 50 {
 		return "", ErrInvalidNameLength
 	}
 

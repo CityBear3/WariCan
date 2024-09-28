@@ -65,6 +65,7 @@ const ConnectionBoard: React.FC = () => {
           placeholder="キーワードを入力します"
           name="keyword"
           margin="10px 20px"
+          width="400px"
         />
         <ProfileTable
           users={filteredUsers}

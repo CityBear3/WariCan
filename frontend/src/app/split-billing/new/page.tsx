@@ -14,7 +14,7 @@ import { FormProvider, useForm } from "react-hook-form";
 export const CreateSplitBilling: React.FC = () => {
   const user = {
     id: "sample id",
-    name: "三島 智昭",
+    name: "田中 達也",
     imageUrl: "/sample_profile.png",
     tag: "#キャンプ\n#プログラミング",
   };
@@ -29,7 +29,7 @@ export const CreateSplitBilling: React.FC = () => {
     {
       id: "sample id 2",
       name: "大河 照之",
-      imageUrl: "http://localhost:3000/sample_profile.png",
+      imageUrl: "http://localhost:3000/kentaro.jpg",
       tag: "#キャンプ\n#プログラミング",
     },
   ];

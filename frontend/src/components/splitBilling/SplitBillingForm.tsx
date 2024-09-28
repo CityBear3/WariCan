@@ -69,13 +69,13 @@ export const SplitBillingForm: React.FC<Props> = ({
         <Table>
           <Tbody>
             <Tr>
-              <Th {...thProps}>立て替え</Th>
+              <Th {...thProps}>立替</Th>
               <Td {...tdProps}>
                 <User user={advancePayer} />
               </Td>
             </Tr>
             <Tr>
-              <Th {...thProps}>合計金額</Th>
+              <Th {...thProps}>金額</Th>
               <Td {...tdProps}>
                 <MoneyField
                   placeholder="金額を入力します"
@@ -86,7 +86,7 @@ export const SplitBillingForm: React.FC<Props> = ({
               </Td>
             </Tr>
             <Tr>
-              <Th {...thProps}>割り勘方法</Th>
+              <Th {...thProps}>方法</Th>
               <Td {...tdProps}>
                 <SplitBillingTypeText type={"EQUAL_SPLIT"} />
               </Td>

@@ -23,14 +23,14 @@ const SplitBilling: React.FC<Props> = ({ params: { id } }) => {
   const members: UserModel[] = [
     {
       id: "sample id 1",
-      name: "三島 智昭",
+      name: "田中 達也",
       imageUrl: "/sample_profile.png",
       tag: "#キャンプ\n#プログラミング",
     },
     {
       id: "sample id 2",
       name: "大河 照之",
-      imageUrl: "/sample_profile.png",
+      imageUrl: "/kentaro.jpg",
       tag: "#キャンプ\n#プログラミング",
     },
   ];
@@ -51,9 +51,9 @@ const SplitBilling: React.FC<Props> = ({ params: { id } }) => {
     status: "ACTIVE",
   });
 
-  const [paidAmount, setPaidAmount] = useState<number>(0);
+  const [paidAmount, setPaidAmount] = useState<number>(splitBilling.amount / 2);
   useEffect(() => {
-    setTimeout(() => setPaidAmount(splitBilling.amount), 2000);
+    setTimeout(() => setPaidAmount(splitBilling.amount), 5000);
   }, []);
 
   return (

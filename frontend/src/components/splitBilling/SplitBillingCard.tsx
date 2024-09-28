@@ -60,19 +60,19 @@ export const SplitBillingCard: React.FC<Props> = ({ splitBilling }) => (
         <Table>
           <Tbody>
             <Tr>
-              <Th {...thProps}>立て替え</Th>
+              <Th {...thProps}>立替</Th>
               <Td {...tdProps}>
                 <User user={splitBilling.advancePayer} />
               </Td>
             </Tr>
             <Tr>
-              <Th {...thProps}>合計金額</Th>
+              <Th {...thProps}>金額</Th>
               <Td {...tdProps}>
                 <MoneyText amount={splitBilling.amount} />
               </Td>
             </Tr>
             <Tr>
-              <Th {...thProps}>割り勘方法</Th>
+              <Th {...thProps}>方法</Th>
               <Td {...tdProps}>
                 <SplitBillingTypeText type={splitBilling.type} />
               </Td>

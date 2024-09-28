@@ -10,8 +10,8 @@ INSERT INTO "user" (
   'CF290BEE-9EB4-4E28-BEA9-C8C3B37CB621'
   , 'EBC4725A-BC7D-47D2-B7EF-0446B0BEE6B3'
   , 'tomoaki@example.com'
-  , '智昭'
-  , '三島'
+  , '達也'
+  , '田中'
 ), (
   '45E144DC-15A3-4F9F-8A6C-FD3F27B297B1'
   , 'FFE71704-1E91-46CF-BCC8-0DD210762493'
@@ -36,6 +36,12 @@ INSERT INTO "user" (
   , 'misaki@example.com'
   , '美咲'
   , '城島'
+), (
+  '1E932F4E-EB18-4550-B6B6-F9B3BB06D08F'
+  , '1E932F4E-EB18-4550-B6B6-F9B3BB06D08F'
+  , 'yoshiki@example.com'
+  , '良樹'
+  , '羽生'
 );
 
 TRUNCATE TABLE "user_profile" CASCADE;
@@ -48,28 +54,33 @@ INSERT INTO "user_profile" (
 ) VALUES (
   '66F42768-E201-4581-8494-82DFBED2F4FA'
   , 'CF290BEE-9EB4-4E28-BEA9-C8C3B37CB621'
-  , '#カフェ巡り' || CHR(13) || '#ボーリング'
-  , '/sample_profile.png'
+  , '#同志社大学' || CHR(13) || '#ボーリング' || CHR(13) || '#26卒' || CHR(13) || '#水泳'
+  , '/tomoaki.png'
 ), (
   '45E144DC-15A3-4F9F-8A6C-FD3F27B297B1'
   , '45E144DC-15A3-4F9F-8A6C-FD3F27B297B1'
-  , '#カフェ巡り' || CHR(13) || '#ボーリング'
-  , '/sample_profile.png'
+  , '#プログラミング' || CHR(13) || '#ハッカソン' || CHR(13) || '#横浜在住'
+  , '/teruyuki.jpg'
 ), (
   '02E7AA00-3057-462A-98F6-0B076638BC25'
   , '02E7AA00-3057-462A-98F6-0B076638BC25'
-  , '#カフェ巡り' || CHR(13) || '#ボーリング'
-  , '/sample_profile.png'
+  , '#個人開発' || CHR(13) || '#Tech.SummarCamp' || CHR(13) || '#プログラミング'
+  , '/kentaro.jpg'
 ), (
   '52422CF3-9887-4154-B637-2FF5BF78F67A'
   , '52422CF3-9887-4154-B637-2FF5BF78F67A'
-  , '#カフェ巡り' || CHR(13) || '#ボーリング'
-  , '/sample_profile.png'
+  , '#カフェ巡り' || CHR(13) || '#関西大学' || CHR(13) || '#25卒'
+  , '/yumi.jpg'
 ), (
   'BA93CD20-AE88-4F30-A81F-051B7E9A3E73'
   , 'BA93CD20-AE88-4F30-A81F-051B7E9A3E73'
-  , '#カフェ巡り' || CHR(13) || '#ボーリング'
-  , '/sample_profile.png'
+  , '#お月見' || CHR(13) || '#料理' || CHR(13) || '#スイーツ'|| CHR(13) || '#大阪'
+  , '/misaki.jpg'
+), (
+  '1E932F4E-EB18-4550-B6B6-F9B3BB06D08F'
+  , '1E932F4E-EB18-4550-B6B6-F9B3BB06D08F'
+  , '#電車' || CHR(13) || '#居酒屋' || CHR(13) || '#サッカー'|| CHR(13) || '#お化け屋敷'
+  , '/yoshiki.jpg'
 );
 
 TRUNCATE TABLE "group" CASCADE;
@@ -102,6 +113,18 @@ INSERT INTO "group_member" (
   '02E7AA00-3057-462A-98F6-0B076638BC25'
   , '66F42768-E201-4581-8494-82DFBED2F4FA'
   , '02E7AA00-3057-462A-98F6-0B076638BC25'
+), (
+  '52422CF3-9887-4154-B637-2FF5BF78F67A'
+  , '66F42768-E201-4581-8494-82DFBED2F4FA'
+  , '52422CF3-9887-4154-B637-2FF5BF78F67A'
+), (
+  'BA93CD20-AE88-4F30-A81F-051B7E9A3E73'
+  , '66F42768-E201-4581-8494-82DFBED2F4FA'
+  , 'BA93CD20-AE88-4F30-A81F-051B7E9A3E73'
+), (
+  '1E932F4E-EB18-4550-B6B6-F9B3BB06D08F'
+  , '66F42768-E201-4581-8494-82DFBED2F4FA'
+  , '1E932F4E-EB18-4550-B6B6-F9B3BB06D08F'
 );
 
 TRUNCATE TABLE "wallet" CASCADE;
